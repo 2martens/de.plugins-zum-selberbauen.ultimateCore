@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package name="de.plugins-zum-selberbauen.componentPIP" xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/package.xsd">
+    <packageinformation>
+        <packagename><![CDATA[Component PIP]]></packagename>
+        
+        <packagedescription><![CDATA[Adds the component pip.]]></packagedescription>
+        <packagedescription language="de"><![CDATA[Fügt das Component PIP hinzu.]]></packagedescription>
+        <packagedescription language="de-informal"><![CDATA[Fügt das Component PIP.]]></packagedescription>
+        
+        <isapplication>0</isapplication>
+        <isunique>1</isunique>
+        <version>1.0.0 Alpha 1</version>
+        <date>2012-07-21</date>    
+    </packageinformation>
+    
+    <authorinformation>
+        <author><![CDATA[Jim Martens]]></author>
+        <authorurl><![CDATA[http://www.plugins-zum-selberbauen.de/]]></authorurl>
+    </authorinformation>
+    
+    <requiredpackages>
+        <requiredpackage minversion="2.0.0*">com.woltlab.wcf</requiredpackage>
+    </requiredpackages>
+    
+    <instructions type="install">
+        <!-- files -->
+        <instruction type="packageInstallationPlugin">packageInstallationPlugin.xml</instruction>
+        <instruction type="file">files.tar</instruction>
+        <instruction type="sql">install.sql</instruction>
+    </instructions>
+</package>
