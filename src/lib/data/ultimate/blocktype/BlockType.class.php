@@ -1,23 +1,23 @@
 <?php
-namespace wcf\data\component;
+namespace wcf\data\ultimate\blocktype;
 use wcf\data\DatabaseObject;
 use wcf\system\WCF;
 
 /**
- * Represents a component entry.
+ * Represents a blockType entry.
  *
  * @author Jim Martens
  * @copyright 2011-2012 Jim Martens
  * @license http://www.plugins-zum-selberbauen.de/index.php?page=CMSLicense CMS License
- * @package de.plugins-zum-selberbauen.ultimate
- * @subpackage data.component
+ * @package de.plugins-zum-selberbauen.ultimateCore
+ * @subpackage data.ultimate.blockType
  * @category Ultimate CMS
  */
-class Component extends DatabaseObject {
+class BlockType extends DatabaseObject {
     /**
      * @see \wcf\data\DatabaseObject::$databaseTableName
      */
-    protected static $databaseTableName = 'component';
+    protected static $databaseTableName = 'ultimate_blocktype';
     
     /**
      * @see \wcf\data\DatabaseObject::$databaseTableIndexIsIdentity
@@ -27,14 +27,14 @@ class Component extends DatabaseObject {
     /**
      * @see \wcf\data\DatabaseObject::$databaseTableIndexName
      */
-    protected static $databaseTableIndexName = 'componentID';
+    protected static $databaseTableIndexName = 'blockTypeID';
     
     /**
-     * Returns the title of this component.
+     * Returns the title of this blockType.
      *
      * @return string
      */
     public function __toString() {
-        return WCF::getLanguage()->get($this->title);
+        return WCF::getLanguage()->get($this->blockTypeName);
     }
 }

@@ -3,59 +3,48 @@ namespace wcf\system\package\plugin;
 use wcf\system\exception\SystemException;
 use wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin;
 use wcf\system\WCF;
+use wcf\util\ClassUtil;
 
 /**
- * This PIP installes, updates or deletes components.
+ * This PIP installes, updates or deletes blockTypes.
  *
  * @author Jim Martens
  * @copyright 2011-2012 Jim Martens
  * @license http://www.plugins-zum-selberbauen.de/index.php?page=CMSLicense CMS License
- * @package de.plugins-zum-selberbauen.ultimate
+ * @package de.plugins-zum-selberbauen.ultimateCore
  * @subpackage system.package.plugin
  * @category Ultimate CMS
  */
-class ComponentPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
+class UltimateBlockTypePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
     /**
      * @see \wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
      */
-    public $className = '\wcf\data\component\ComponentEditor';
+    public $className = '\wcf\data\ultimate\blocktype\BlockTypeEditor';
     
     /**
      * @see	\wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
      */
-    public $tableName = 'component';
+    public $tableName = 'ultimate_blocktype';
     
     /**
      * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
      */
-    public $tagName = 'component';
-    
-    /**
-     * Installs only if the Ultimate CMS is installed as well.
-     *
-     * @see \wcf\system\package\plugin\IPackageInstallationPlugin::install()
-     */
-    public function install() {
-        if (!defined('ULTIMATE_N')) {
-            return; // nasty workaround since a PIP of an app isn't working properly
-        }
-        parent::install();
-    }
+    public $tagName = 'blockType';
     
     /**
      * @see \wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
      */
     protected function handleDelete(array $items) {
         $sql = 'DELETE FROM wcf'.WCF_N.'_'.$this->tableName.'
-        		WHERE  className = ?
-                AND    packageID = ?';
+        		WHERE  packageID     = ?
+                AND    blockTypeName = ?';
         $statement = WCF::getDB()->prepareStatement($sql);
         
         WCF::getDB()->beginTransaction();
-        foreach ($items as $component) {
+        foreach ($items as $blockType) {
             $statement->executeUnbuffered(array(
-                $component['elements']['classname'],
-                $this->installation->getPackageID()
+                $this->installation->getPackageID(),
+                $blockType['attributes']['name']
             ));
         }
         WCF::getDB()->commitTransaction();
@@ -67,8 +56,8 @@ class ComponentPackageInstallationPlugin extends AbstractXMLPackageInstallationP
     protected function prepareImport(array $data) {
         $mapped = array(
             'packageID' => $this->installation->getPackageID(),
-            'className' => $data['elements']['classname'],
-            'title' => $data['elements']['title']
+            'blockTypeName' => $data['attributes']['name'],
+            'bockTypeClassName' => $data['elements']['className']
         );
         return $mapped;
     }
@@ -77,8 +66,8 @@ class ComponentPackageInstallationPlugin extends AbstractXMLPackageInstallationP
      * @see \wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
      */
     protected function findExistingItem(array $data) {
-        //You can't update a component with an xml file.
-        //To update the component, simply update its class file.
+        // You can't update a blockType with an xml file.
+        // To update the blockType, simply update its class file.
         return null;
     }
     
@@ -87,20 +76,24 @@ class ComponentPackageInstallationPlugin extends AbstractXMLPackageInstallationP
      * @throws \wcf\system\exception\SystemException
      */
     protected function validateImport(array $data) {
-        if (!isset($data['className']) || !isset($data['title'])) {
+        if (!isset($data['blockTypeName']) || !isset($data['blockTypeClassName'])) {
             throw new SystemException('The array given doesn\'t fit the form needed by the object editor class.');
         }
         
-        if (empty($data['className'])) {
+        if (empty($data['blockTypeName'])) {
+            throw new SystemException('The given name can\'t be empty.');
+        }
+        
+        if (empty($data['blockTypeClassName'])) {
             throw new SystemException('The given class name can\'t be empty.');
         }
         
-        if (empty($data['title'])) {
-            throw new SystemException('The given title can\'t be empty.');
+        if (!strpos($data['blockTypeClassName'], '\\')) {
+            throw new SystemException('The class name has to contain at least one namespace.');
         }
         
-        if (!strpos($data['className'], '\\')) {
-            throw new SystemException('The class name has to contain at least one namespace.');
+        if (!ClassUtil::isInstanceOf($data['blockTypeClassName'], '\wcf\system\ultimate\blocktype\IBlockType')) {
+            throw new SystemException('The class belonging to the class name has to implement IBlockType.');
         }
     }
 }

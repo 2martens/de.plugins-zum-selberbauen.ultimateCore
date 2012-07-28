@@ -1,20 +1,20 @@
 <?php
-namespace wcf\data\component;
+namespace wcf\data\ultimate\block;
 use wcf\data\AbstractDatabaseObjectAction;
 
 /**
- * Executes component-related actions.
+ * Executes block-related actions.
  *
  * @author Jim Martens
  * @copyright 2011-2012 Jim Martens
  * @license http://www.plugins-zum-selberbauen.de/index.php?page=CMSLicense CMS License
- * @package de.plugins-zum-selberbauen.ultimate
- * @subpackage data.component
+ * @package de.plugins-zum-selberbauen.ultimateCore
+ * @subpackage data.ultimate.block
  * @category Ultimate CMS
  */
-class ComponentAction extends AbstractDatabaseObjectAction {
+class BlockAction extends AbstractDatabaseObjectAction {
     /**
      * @see \wcf\data\AbstractDatabaseObjectAction::$className
      */
-    public $className = '\wcf\data\component\ComponentEditor';
+    public $className = '\wcf\data\ultimate\block\BlockEditor';
 }

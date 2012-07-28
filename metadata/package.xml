@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package name="de.plugins-zum-selberbauen.componentPIP" xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/package.xsd">
+<package name="de.plugins-zum-selberbauen.ultimateCore" xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/package.xsd">
     <packageinformation>
-        <packagename><![CDATA[Component PIP]]></packagename>
+        <packagename><![CDATA[Ultimate Core]]></packagename>
         
-        <packagedescription><![CDATA[Adds the component pip.]]></packagedescription>
-        <packagedescription language="de"><![CDATA[Fügt das Component PIP hinzu.]]></packagedescription>
-        <packagedescription language="de-informal"><![CDATA[Fügt das Component PIP.]]></packagedescription>
+        <packagedescription><![CDATA[Provides core functionality for the Ultimate CMS.]]></packagedescription>
+        <packagedescription language="de"><![CDATA[Stellt Core-Funktionalität für das Ultimate CMS zur Verfügung.]]></packagedescription>
+        <packagedescription language="de-informal"><![CDATA[Stellt Core-Funktionalität für das Ultimate CMS zur Verfügung.]]></packagedescription>
         
         <isapplication>0</isapplication>
         <isunique>1</isunique>
         <version>1.0.0 Alpha 1</version>
-        <date>2012-07-21</date>    
+        <date>2012-07-28</date>    
     </packageinformation>
     
     <authorinformation>
