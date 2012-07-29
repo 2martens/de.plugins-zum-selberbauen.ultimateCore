@@ -38,10 +38,12 @@ class UltimateBlockCacheBuilder implements ICacheBuilder {
         
         
         foreach ($data['blocks'] as $blockID => $block) {
+            /* @var $block \wcf\data\ultimate\block\Block */
+            
             // cache custom queries
-            $sql = $block->query;
+            $sql = $block->__get('query');
             if (empty($sql)) continue;
-            $parameters = $block->parameters;
+            $parameters = $block->__get('parameters');
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($parameters);
             

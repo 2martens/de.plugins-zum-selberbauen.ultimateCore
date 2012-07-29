@@ -64,6 +64,7 @@ class UltimateBlockTypePackageInstallationPlugin extends AbstractXMLPackageInsta
     
     /**
      * @see \wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
+     * @return null
      */
     protected function findExistingItem(array $data) {
         // You can't update a blockType with an xml file.

@@ -1,8 +1,8 @@
 <?php
 namespace wcf\data\ultimate\template;
 use wcf\data\ultimate\block\Block;
-
 use wcf\data\DatabaseObject;
+use wcf\system\WCF;
 
 /**
  * Represents a template entry.

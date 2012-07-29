@@ -7,12 +7,15 @@ use wcf\util\StringUtil;
 
 /**
  * Abstract class for all blockTypes.
+ * 
+ * Use this class for creating own BlockType classes. If you do that, you offer the chance for others to
+ * modify and/or add functionality and you ensure that all methods of IBlockType are implemented.
  *
  * @author Jim Martens
  * @copyright 2012 Jim Martens
  * @license http://www.plugins-zum-selberbauen.de/index.php?page=CMSLicense CMS License
  * @package de.plugins-zum-selberbauen.ultimateCore
- * @subpackage system.ultimate.blockType
+ * @subpackage system.ultimate.blocktype
  * @category Ultimate CMS
  */
 abstract class AbstractBlockType implements IBlockType {
@@ -23,10 +26,16 @@ abstract class AbstractBlockType implements IBlockType {
     public $templateName = '';
     
     /**
-     * Contains the read rows.
-     * @var array
+     * Contains the read rows of custom query.
+     * @var array[]
      */
     public $queryResult = array();
+    
+    /**
+     * Contains the read objects (no custom query specified).
+     * @var object[]
+     */
+    public $objects = array();
     
     /**
      * Contains the request type.
@@ -67,33 +76,30 @@ abstract class AbstractBlockType implements IBlockType {
     
     /**
      * Creates a new BlockType object.
+     * 
+     * @internal The constructor does nothing and is final, because you can't control what the constructor
+     * should do. A subclass could easily overwrite this one and do some other stuff. 
      */
     public final function __construct() {}
     
     /**
+     * @internal Calls the methods readData and assignVariables.
      * @see \wcf\system\ultimate\blockType\IBlockType::run()
      */
     public function run($requestType, $blockID) {
         // fire event
         EventHandler::getInstance()->fireAction($this, 'run');
+        
         $this->requestType = StringUtil::trim($requestType);
         $this->blockID = intval($blockID);
         $this->block = new Block($this->blockID);
         
-        $this->readParameters();
         $this->readData();
         $this->assignVariables();
     }
     
     /**
-     * @see \wcf\system\ultimate\blockType\IBlockType::readParameters()
-     */
-    public function readParameters() {
-        // fire event
-        EventHandler::getInstance()->fireAction($this, 'readParameters');
-    }
-    
-    /**
+     * @internal Calls the method loadCache().
      * @see \wcf\system\ultimate\blockType\IBlockType::readData()
      */
     public function readData() {
@@ -112,6 +118,7 @@ abstract class AbstractBlockType implements IBlockType {
     }
     
     /**
+     * @internal You have to override this method.
      * @see \wcf\system\ultimate\blockType\IBlockType::getHTML()
      */
     public function getHTML() {
@@ -122,10 +129,15 @@ abstract class AbstractBlockType implements IBlockType {
     
     /**
      * Loads the cache.
+     *
+     * Use this method instead of defining an own one. Each BlockType should only need one kind of objects.
+     * If a custom query for the block type exists, use the results from it instead of reading the general cache.
+     * 
+     * @since 1.0.0
      */
     protected function loadCache() {
         if (!empty($this->block->query)) {
-            $cacheName = 'ultimate-block';
+            $cacheName = 'ultimate-block-'.PACKAGE_ID;
             $cacheBuilderClassName = '\wcf\system\cache\builder\UltimateBlockCacheBuilder';
             $file = WCF_DIR.'cache/cache'.$cacheName.'.php';
             CacheHandler::getInstance()->addResource($cacheName, $file, $cacheBuilderClassName);
@@ -134,7 +146,7 @@ abstract class AbstractBlockType implements IBlockType {
         } else {
             $file = WCF_DIR.'cache/cache.'.$this->cacheName.'.php';
             CacheHandler::getInstance()->addResource($this->cacheName, $file, $this->cacheBuilderClassName);
-            $this->queryResult = CacheHandler::getInstance()->get($this->cacheName, $this->cacheIndex);
+            $this->objects = CacheHandler::getInstance()->get($this->cacheName, $this->cacheIndex);
         }
     }
 }

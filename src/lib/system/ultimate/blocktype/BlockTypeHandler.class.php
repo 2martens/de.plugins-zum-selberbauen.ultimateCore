@@ -11,7 +11,7 @@ use wcf\system\SingletonFactory;
  * @copyright 2012 Jim Martens
  * @license http://www.plugins-zum-selberbauen.de/index.php?page=CMSLicense CMS License
  * @package de.plugins-zum-selberbauen.ultimateCore
- * @subpackage system.ultimate.blockType
+ * @subpackage system.ultimate.blocktype
  * @category Ultimate CMS
  */
 class BlockTypeHandler extends SingletonFactory {
@@ -29,7 +29,7 @@ class BlockTypeHandler extends SingletonFactory {
     
     /**
      * Contains the read objects.
-     * @var array
+     * @var \wcf\data\ultimate\template\Template[]
      */
     protected $objects = array();
     
@@ -44,22 +44,31 @@ class BlockTypeHandler extends SingletonFactory {
     
     /**
      * Handles the request.
-     *
+     * 
+     * @since 1.0.0
+     * @internal Calls the method getHTML on each relevant BlockType.
+     * 
      * @param string  $requestType
      * @param integer $templateID
-     *
-     * @return array<String>
+     * @return string[]
      */
     public function handleRequest($requestType, $templateID) {
         $this->requestType = StringUtil::trim($requestType);
         $this->templateID = intval($templateID);
         
         $this->loadCache();
+        /* @var $template \wcf\data\ultimate\template\Template */
         $template = $this->objects[$this->templateID];
+       
         $resultArray = array();
-        foreach ($template->blocks as $blockID => $block) {
-            $blockType = $block->blockType;
-            $className = $blockType->blockTypeClassName;
+        foreach ($template->__get('blocks') as $blockID => $block) {
+            /* @var $block \wcf\data\ultimate\block\Block */
+            /* @var $blockType \wcf\data\ultimate\blocktype\BlockType */
+            
+            $blockType = $block->__get('blockType');
+            $className = $blockType->__get('blockTypeClassName');
+            
+            /* @var $blockTypeController \wcf\system\ultimate\blocktype\IBlockType */
             $blockTypeController = new $className();
             $blockTypeController->run($this->requestType, $blockID);
             $resultArray[$blockID] = $blockTypeController->getHTML();
@@ -67,8 +76,11 @@ class BlockTypeHandler extends SingletonFactory {
         return $resultArray;
     }
     
+    /**
+     * Reads the templates from cache.
+     */
     protected function loadCache() {
-        $cacheName = 'ultimate-template';
+        $cacheName = 'ultimate-template-'.PACKAGE_ID;
         $cacheBuilderClassName = '\wcf\system\cache\builder\UltimateTemplateCacheBuilder';
         $file = WCF_DIR.'cache/cache.'.$cacheName.'.php';
         CacheHandler::getInstance()->addResource($cacheName, $file, $cacheBuilderClassName);
