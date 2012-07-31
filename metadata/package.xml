@@ -27,5 +27,8 @@
         <instruction type="packageInstallationPlugin">packageInstallationPlugin.xml</instruction>
         <instruction type="file">files.tar</instruction>
         <instruction type="sql">install.sql</instruction>
+        
+        <!-- xmls -->
+        <instruction type="templateListener">templateListener.xml</instruction>
     </instructions>
 </package>

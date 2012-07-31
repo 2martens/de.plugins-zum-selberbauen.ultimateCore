@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/templateListener.xsd">
+    <import>
+        <templatelistener name="timePickerACP">
+            <environment>admin</environment>
+            <templatename>header</templatename>
+            <eventname>javascriptInclude</eventname>
+            <templatecode><![CDATA[<script type="text/javascript" src="{@$__wcf->getPath()}js/ultimateContent.js"></script>
+<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui-timepicker-addon.min.js"></script>
+<script type="text/javascript" src="{@$__wcf->getPath()}js/jquery-ui.timepicker-addon-i18n.js"></script>
+
+<!-- ultimate Core stylesheet -->
+<link rel="stylesheet/less" type="text/css" href="{@$__wcf->getPath()}style/ultimateCore.less" />
+<!-- /ultimate Core stylesheet -->]]></templatecode>
+        </templatelistener>
+        <templatelistener name="timePicker">
+            <environment>user</environment>
+            <templatename>headInclude</templatename>
+            <eventname>javascriptInclude</eventname>
+            <templatecode><![CDATA[<script type="text/javascript" src="{@$__wcf->getPath()}js/ultimateContent.js"></script>
+<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui-timepicker-addon.min.js"></script>
+<script type="text/javascript" src="{@$__wcf->getPath()}js/jquery-ui.timepicker-addon-i18n.js"></script>
+
+<!-- ultimate Core stylesheet -->
+<link rel="stylesheet/less" type="text/css" href="{@$__wcf->getPath()}style/ultimateCore.less" />
+<!-- /ultimate Core stylesheet -->]]></templatecode>
+        </templatelistener>
+    </import>
+</data>
