@@ -5,11 +5,11 @@
             <environment>admin</environment>
             <templatename>header</templatename>
             <eventname>javascriptInclude</eventname>
-            <templatecode><![CDATA[<script type="text/javascript" src="{@$__wcf->getPath()}js/ultimateContent.js"></script>
-<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui-timepicker-addon.min.js"></script>
-<script type="text/javascript" src="{@$__wcf->getPath()}js/jquery-ui.timepicker-addon-i18n.js"></script>
+            <templatecode><![CDATA[<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui-timepicker-addon.min.js"></script>
+<script type="text/javascript" src="{@$__wcf->getPath()}js/jquery-ui-timepicker-addon-i18n.js"></script>
 
 <!-- ultimate Core stylesheet -->
+<link rel="stylesheet" type="text/css" href="{@$__wcf->getPath()}style/3rdParty/jquery-ui.css" />
 <link rel="stylesheet/less" type="text/css" href="{@$__wcf->getPath()}style/ultimateCore.less" />
 <!-- /ultimate Core stylesheet -->]]></templatecode>
         </templatelistener>
@@ -17,11 +17,11 @@
             <environment>user</environment>
             <templatename>headInclude</templatename>
             <eventname>javascriptInclude</eventname>
-            <templatecode><![CDATA[<script type="text/javascript" src="{@$__wcf->getPath()}js/ultimateContent.js"></script>
-<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui-timepicker-addon.min.js"></script>
-<script type="text/javascript" src="{@$__wcf->getPath()}js/jquery-ui.timepicker-addon-i18n.js"></script>
+            <templatecode><![CDATA[<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui-timepicker-addon.min.js"></script>
+<script type="text/javascript" src="{@$__wcf->getPath()}js/jquery-ui-timepicker-addon-i18n.js"></script>
 
 <!-- ultimate Core stylesheet -->
+<link rel="stylesheet" type="text/css" href="{@$__wcf->getPath()}style/3rdParty/jquery-ui.css" />
 <link rel="stylesheet/less" type="text/css" href="{@$__wcf->getPath()}style/ultimateCore.less" />
 <!-- /ultimate Core stylesheet -->]]></templatecode>
         </templatelistener>
