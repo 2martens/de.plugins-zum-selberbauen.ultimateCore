@@ -29,13 +29,8 @@ class DateExtendedModifierTemplatePlugin extends DateModifierTemplatePlugin {
         $timestamp = intval($tagArgs[0]);
         $dateTimeObject = DateUtil::getDateTimeByTimestamp($timestamp);
         $date = DateUtil::format(
-            $dateTimeObject, 
-            WCF::getLanguage()->getDynamicVariable(
-                'ultimate.date.dateFormat', 
-                array(
-                    'britishEnglish' => ULTIMATE_GENERAL_ENGLISHLANGUAGE
-                )
-            )
+            $dateTimeObject,
+            (!empty($tagArgs[2])) ? $tagArgs[2] : DateUtil::DATE_FORMAT
         );
         $time = DateUtil::format($dateTimeObject, DateUtil::TIME_FORMAT);
         $formattedDate = parent::execute($tagArgs, $tplObj);
