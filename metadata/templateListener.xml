@@ -10,7 +10,7 @@
 
 <!-- ultimate Core stylesheet -->
 <link rel="stylesheet" type="text/css" href="{@$__wcf->getPath()}style/3rdParty/jquery-ui.css" />
-<link rel="stylesheet/less" type="text/css" href="{@$__wcf->getPath()}style/ultimateCore.less" />
+<link rel="stylesheet" type="text/css" href="{@$__wcf->getPath()}style/ultimateCore.css" />
 <!-- /ultimate Core stylesheet -->]]></templatecode>
         </templatelistener>
         <templatelistener name="timePicker">
@@ -22,7 +22,7 @@
 
 <!-- ultimate Core stylesheet -->
 <link rel="stylesheet" type="text/css" href="{@$__wcf->getPath()}style/3rdParty/jquery-ui.css" />
-<link rel="stylesheet/less" type="text/css" href="{@$__wcf->getPath()}style/ultimateCore.less" />
+<link rel="stylesheet" type="text/css" href="{@$__wcf->getPath()}style/ultimateCore.css" />
 <!-- /ultimate Core stylesheet -->]]></templatecode>
         </templatelistener>
     </import>
