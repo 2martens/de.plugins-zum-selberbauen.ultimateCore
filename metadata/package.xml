@@ -27,6 +27,7 @@
         <instruction type="file">files.tar</instruction>
         
         <!-- xmls -->
+        <instruction type="packageInstallationPlugin">packageInstallationPlugin.xml</instruction>
         <instruction type="templateListener">templateListener.xml</instruction>
     </instructions>
 </package>
