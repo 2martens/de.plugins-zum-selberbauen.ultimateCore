@@ -66,7 +66,6 @@ class NestedHtmlCheckboxesFunctionTemplatePlugin extends HtmlCheckboxesFunctionT
         if (!isset($tagArgs['separator'])) {
             $tagArgs['separator'] = '';
         }
-        
         $this->tagArgs = $tagArgs;
         
         // build html
@@ -89,7 +88,7 @@ class NestedHtmlCheckboxesFunctionTemplatePlugin extends HtmlCheckboxesFunctionT
      */
     protected function buildHtml($key, array $valueArray) {
         $html = '';
-        $html .= '<label><input type="checkbox" name="'.$this->encodeHTML($this->tagArgs['name']).'[]" value="'.$this->encodeHTML($key).'"'.(in_array($key, $this->tagArgs['selected']) ? ' checked="checked"' : '').(isset($this->tagArgs['disabled']) ? (is_array($this->tagArgs['disabled']) && !isset($this->tagArgs['disabled'][$key]) ? '' : ' disabled="disabled"') : '').' /> '.$this->encodeHTML($valueArray[0]).'</label>';
+        $html .= '<label><input type="checkbox" name="'.$this->encodeHTML($this->tagArgs['name']).'[]" value="'.$this->encodeHTML($key).'"'.(in_array($key, $this->tagArgs['selected']) ? ' checked="checked"' : '').(isset($this->tagArgs['disabled']) ? (is_array($this->tagArgs['disabled']) && !in_array($key, $this->tagArgs['disabled']) ? '' : ' disabled="disabled"') : '').' /> '.$this->encodeHTML($valueArray[0]).'</label>';
         if (count($valueArray[1])) {
             $html .= '<ul class="nestedList">';
             $tmpHtml = '';
