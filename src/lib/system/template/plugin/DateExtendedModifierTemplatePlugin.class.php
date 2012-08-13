@@ -14,26 +14,26 @@ use wcf\util\DateUtil;
  * {$timestamp|dateExtended}
  * {"132845333"|dateExtended:"Y-m-d"}
  * 
- * @author Jim Martens
- * @copyright 2012 Jim Martens
- * @license http://www.plugins-zum-selberbauen.de/index.php?page=CMSLicense CMS License
- * @package de.plugins-zum-selberbauen.ultimateCore
- * @subpackage system.template.plugin
- * @category Community Framework
+ * @author		Jim Martens
+ * @copyright	2012 Jim Martens
+ * @license		http://www.plugins-zum-selberbauen.de/index.php?page=CMSLicense CMS License
+ * @package		de.plugins-zum-selberbauen.ultimateCore
+ * @subpackage	system.template.plugin
+ * @category	Community Framework
  */
 class DateExtendedModifierTemplatePlugin extends DateModifierTemplatePlugin {
-    /**
-     * @see \wcf\system\template\plugin\IModifierTemplatePlugin::execute()
-     */
-    public function execute($tagArgs, TemplateEngine $tplObj) {
-        $timestamp = intval($tagArgs[0]);
-        $dateTimeObject = DateUtil::getDateTimeByTimestamp($timestamp);
-        $date = DateUtil::format(
-            $dateTimeObject,
-            (!empty($tagArgs[2])) ? $tagArgs[2] : DateUtil::DATE_FORMAT
-        );
-        $time = DateUtil::format($dateTimeObject, DateUtil::TIME_FORMAT);
-        $formattedDate = parent::execute($tagArgs, $tplObj);
-        return '<time datetime="'.DateUtil::format($dateTimeObject, 'c').'" class="datetime" data-timestamp="'.$timestamp.'" data-date="'.$date.'" data-time="'.$time.'" data-offset="'.$dateTimeObject->getOffset().'">'.$formattedDate.'</time>';
-    }
+	/**
+	 * @see	\wcf\system\template\plugin\IModifierTemplatePlugin::execute()
+	 */
+	public function execute($tagArgs, TemplateEngine $tplObj) {
+		$timestamp = intval($tagArgs[0]);
+		$dateTimeObject = DateUtil::getDateTimeByTimestamp($timestamp);
+		$date = DateUtil::format(
+			$dateTimeObject,
+			(!empty($tagArgs[2])) ? $tagArgs[2] : DateUtil::DATE_FORMAT
+		);
+		$time = DateUtil::format($dateTimeObject, DateUtil::TIME_FORMAT);
+		$formattedDate = parent::execute($tagArgs, $tplObj);
+		return '<time datetime="'.DateUtil::format($dateTimeObject, 'c').'" class="datetime" data-timestamp="'.$timestamp.'" data-date="'.$date.'" data-time="'.$time.'" data-offset="'.$dateTimeObject->getOffset().'">'.$formattedDate.'</time>';
+	}
 }
