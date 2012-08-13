@@ -9,11 +9,14 @@ use wcf\system\template\TemplateEngine;
  * Note: This function only works with options( and selected), not with output( and values).
  * In addition you can use nested checkboxes. To get nested checkboxes the given options array must contain an array per key.
  * This array has to contain the element itself at the first position and an array of sub elements at the second position. 
+ * Note: Each given element must implement \wcf\data\ITitledDatabaseObject.
  * With nested you get only checkboxes in a look-like tree. They are still independent from each other.
  * 
  * Usage:
  * {nestedHtmlCheckboxes name="x" options=$array}
  * {nestedHtmlCheckboxes name="x" options=$array selected=$foo}
+ * {nestedHtmlCheckboxes name="x" options=$array disabled=$foo}
+ * {nestedHtmlCheckboxes name="x" options=$array selected=$foo disabled=$foo}
  * 
  * @author Jim Martens
  * @copyright 2012 Jim Martens
@@ -81,12 +84,12 @@ class NestedHtmlCheckboxesFunctionTemplatePlugin extends HtmlCheckboxesFunctionT
      * Builds the html recursively.
      * 
      * @param  integer $key
-     * @param  array   $valueArray
+     * @param  (\wcf\data\ITitledDatabaseObject|array)[] $valueArray
      * @return string
      */
     protected function buildHtml($key, array $valueArray) {
         $html = '';
-        $html .= '<label><input type="checkbox" name="'.$this->encodeHTML($this->tagArgs['name']).'[]" value="'.$this->encodeHTML($key).'"'.(in_array($key, $this->tagArgs['selected']) ? ' checked="checked"' : '').(isset($this->tagArgs['disabled']) ? ' disabled="disabled"' : '').' /> '.$this->encodeHTML($valueArray[0]).'</label>';
+        $html .= '<label><input data-name="'.$valueArray[0]->getTitle().'" type="checkbox" name="'.$this->encodeHTML($this->tagArgs['name']).'[]" value="'.$this->encodeHTML($key).'"'.(in_array($key, $this->tagArgs['selected']) ? ' checked="checked"' : '').(isset($this->tagArgs['disabled']) ? (is_array($this->tagArgs['disabled']) && !in_array($key, $this->tagArgs['disabled']) ? '' : ' disabled="disabled"') : '').' /> '.$this->encodeHTML($valueArray[0]).'</label>';
         if (count($valueArray[1])) {
             $html .= '<ul class="nestedList">';
             $tmpHtml = '';
