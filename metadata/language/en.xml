@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com/XSD/language.xsd" languagecode="en">
+	<category name="wcf.acp.package">
+		<item name="wcf.acp.package.step.install.BlockTypePip"><![CDATA[Installing BlockType ...]]></item>
+		<item name="wcf.acp.package.step.uninstall.BlockTypePip"><![CDATA[Uninstalling BlockType ...]]></item>
+		<item name="wcf.acp.package.step.update.BlockTypePip"><![CDATA[Updating BlockType ...]]></item>
+	</category>
+</language>
