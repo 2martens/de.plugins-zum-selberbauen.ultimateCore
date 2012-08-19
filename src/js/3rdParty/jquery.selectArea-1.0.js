@@ -7,8 +7,8 @@
 		}, options);
 		
 		var fn_mousedown = function(e){
-			var cY = e.clientY+$(document).scrollTop(), cX = e.clientX+$(document).scrollLeft();
-			var ghost = $('<div Y="' + cY + '" X="' + cX + '" class="ghost"></div>').css({
+			var cY = e.pageY - $(this).offset().top, cX = e.pageX - $(this).offset().left;
+			var ghost = $('<div data-y="' + cY + '" data-x="' + cX + '" class="ghost"></div>').css({
 				'top': cY,
 				'left': cX,
 				'position': 'absolute',
@@ -22,12 +22,12 @@
 		}
 		var fn_mousemove = function(e){
 			if ($('.ghost').length) {
-				var cY = e.clientY+$(document).scrollTop(), cX = e.clientX+$(document).scrollLeft();
-				var h = cY - $('.ghost').attr('Y');
-				var w = cX - $('.ghost').attr('X');
+				var cY = e.pageY - $(this).offset().top, cX = e.pageX - $(this).offset().left;
+				var h = cY - $('.ghost').data('Y');
+				var w = cX - $('.ghost').data('X');
 				if (h < 0) {
 					var p1 = cY;
-					var p2 = $('.ghost').attr('Y');
+					var p2 = $('.ghost').data('Y');
 					$('.ghost').css({
 						'top': p1,
 						'height': p2 - p1
@@ -39,7 +39,7 @@
 				}
 				if (w < 0) {
 					var p1 = cX;
-					var p2 = $('.ghost').attr('X');
+					var p2 = $('.ghost').data('X');
 					$('.ghost').css({
 						'left': p1,
 						'width': p2 - p1
