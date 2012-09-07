@@ -67,7 +67,8 @@ class BlockTypePackageInstallationPlugin extends AbstractXMLPackageInstallationP
 	protected function prepareImport(array $data) {
 		$databaseData = array(
 			'blockTypeName' => $data['elements']['blocktypename'],
-			'blockTypeClassName' => $data['elements']['blocktypclassname']
+			'blockTypeClassName' => $data['elements']['blocktypeclassname'],
+			'fixedHeight' => (isset($data['elements']['fixedHeight']) ? $data['elements']['fixedHeight'] : 1)
 		);
 		return $databaseData;
 	}
@@ -92,7 +93,10 @@ class BlockTypePackageInstallationPlugin extends AbstractXMLPackageInstallationP
 			}
 		}
 		else {
-			throw new SystemException('Invalid blockTypeClassName', 0, 'The blockTypeClassName has to contain more than the application prefix');
+			throw new SystemException('Invalid blockTypeClassName', 0, 'The blockTypeClassName has to contain more than the application prefix.');
+		}
+		if ($data['fixedHeight'] != 1 && $data['fixedHeight'] != 0) {
+			throw new SystemException('Invalid fixedHeight', 0, 'The fixedHeight has to be either 0 or 1.');
 		}
 	}
 	

@@ -28,6 +28,9 @@ class DateExtendedModifierTemplatePlugin extends DateModifierTemplatePlugin {
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		$timestamp = intval($tagArgs[0]);
 		$dateTimeObject = DateUtil::getDateTimeByTimestamp($timestamp);
+		// we can let this away, because we know implementation
+		// theoretically WoltLab should say in method documentation that a localized formatted date is returned
+		//$dateTimeObject->setTimezone(WCF::getUser()->getTimeZone());
 		$date = DateUtil::format(
 			$dateTimeObject,
 			(!empty($tagArgs[2])) ? $tagArgs[2] : DateUtil::DATE_FORMAT
