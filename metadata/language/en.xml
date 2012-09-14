@@ -4,5 +4,8 @@
 		<item name="wcf.acp.package.step.install.BlockTypePip"><![CDATA[Installing BlockType ...]]></item>
 		<item name="wcf.acp.package.step.uninstall.BlockTypePip"><![CDATA[Uninstalling BlockType ...]]></item>
 		<item name="wcf.acp.package.step.update.BlockTypePip"><![CDATA[Updating BlockType ...]]></item>
+		<item name="wcf.acp.package.step.install.WidgetTypePip"><![CDATA[Installing WidgetType ...]]></item>
+		<item name="wcf.acp.package.step.uninstall.WidgetTypePip"><![CDATA[Uninstalling WidgetType ...]]></item>
+		<item name="wcf.acp.package.step.update.WidgetTypePip"><![CDATA[Updating WidgetType ...]]></item>
 	</category>
 </language>
