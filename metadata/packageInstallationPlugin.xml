@@ -2,5 +2,6 @@
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/packageInstallationPlugin.xsd">
     <import>
         <pip name="blockType">wcf\system\package\plugin\BlockTypePackageInstallationPlugin</pip>
+        <pip name="widgetType">wcf\system\package\plugin\WidgetTypePackageInstallationPlugin</pip>
     </import>
 </data>
