@@ -20,6 +20,7 @@
     
     <requiredpackages>
         <requiredpackage minversion="2.0.0*">com.woltlab.wcf</requiredpackage>
+        <requiredpackage minversion="1.0.0*">com.woltlab.wcf.bbcode</requiredpackage>
     </requiredpackages>
     
     <instructions type="install">
@@ -31,6 +32,7 @@
         
         <!-- xmls -->
         <instruction type="packageInstallationPlugin">packageInstallationPlugin.xml</instruction>
+        <instruction type="bbcode">bbcode.xml</instruction>
         <instruction type="language">language/*.xml</instruction>
     </instructions>
 </package>
