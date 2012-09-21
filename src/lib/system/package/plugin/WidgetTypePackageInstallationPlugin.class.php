@@ -47,6 +47,12 @@ class WidgetTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	public $tagName = 'widgettype';
 	
 	/**
+	 * object editor class name
+	 * @var string
+	 */
+	public $className = '';
+	
+	/**
 	 * Contains the sql data, which will be returned in the method findExistingItem.
 	 * @var	(string|array)[]
 	 */
@@ -88,6 +94,23 @@ class WidgetTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	}
 	
 	/**
+	 * Sets the object variables.
+	 *
+	 * @param	string	$name
+	 * @param	mixed	$value
+	 */
+	public function __set($name, $value) {
+		$allowedValues = array(
+			'className',
+			'findExistingItemSQLData',
+			'handleDeleteItems',
+			'hasUninstallReturn'
+		);
+		if (!in_array($name, $allowedValues)) return;
+		$this->{$name} = $value;
+	}
+	
+	/**
 	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
 	 */
 	protected function prepareImport(array $data) {
@@ -122,6 +145,27 @@ class WidgetTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		}
 		if ($data['fixedHeight'] != 1 && $data['fixedHeight'] != 0) {
 			throw new SystemException('Invalid fixedHeight', 0, 'The fixedHeight has to be either 0 or 1.');
+		}
+	}
+	
+	/**
+	 * @see \wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::import()
+	 */
+	protected function import(array $row, array $data) {
+		if (empty($row)) {
+			// create new item
+			$this->prepareCreate($data);
+	
+			return call_user_func(array($this->className, 'create'), $data);
+		}
+		else {
+			// update existing item
+			$baseClass = call_user_func(array($this->className, 'getBaseClass'));
+	
+			$itemEditor = new $this->className(new $baseClass(null, $row));
+			$itemEditor->update($data);
+	
+			return $itemEditor;
 		}
 	}
 	
