@@ -10,7 +10,7 @@
         <isapplication>0</isapplication>
         <isunique>1</isunique>
         <version>1.0.0 Alpha 1</version>
-        <date>2012-09-14</date>    
+        <date>2012-09-21</date>    
     </packageinformation>
     
     <authorinformation>
@@ -21,6 +21,7 @@
     <requiredpackages>
         <requiredpackage minversion="2.0.0*">com.woltlab.wcf</requiredpackage>
         <requiredpackage minversion="1.0.0*">com.woltlab.wcf.bbcode</requiredpackage>
+        <requiredpackage minversion="1.0.0*">com.woltlab.wcf.comment</requiredpackage>
     </requiredpackages>
     
     <instructions type="install">
