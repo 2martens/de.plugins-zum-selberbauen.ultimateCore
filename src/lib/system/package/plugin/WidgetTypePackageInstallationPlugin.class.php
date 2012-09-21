@@ -152,6 +152,7 @@ class WidgetTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	 * @see \wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::import()
 	 */
 	protected function import(array $row, array $data) {
+		EventHandler::getInstance()->fireAction($this, 'import');
 		if (empty($row)) {
 			// create new item
 			$this->prepareCreate($data);
