@@ -107,7 +107,7 @@ class BlockTypePackageInstallationPlugin extends AbstractXMLPackageInstallationP
 		$this->findExistingItemData = $data;
 		
 		// call findExistingItem event
-		EventHandler::fireAction($this, 'findExistingItem');
+		EventHandler::getInstance()->fireAction($this, 'findExistingItem');
 		
 		if (!empty($this->findExistingItemSQLData)) {
 			return $this->findExistingItemSQLData;
@@ -121,6 +121,6 @@ class BlockTypePackageInstallationPlugin extends AbstractXMLPackageInstallationP
 	protected function handleDelete(array $items) {
 		$this->handleDeleteItems = $items;
 		// call handleDelete event
-		EventHandler::fireAction($this, 'handleDelete');
+		EventHandler::getInstance()->fireAction($this, 'handleDelete');
 	}
 }
