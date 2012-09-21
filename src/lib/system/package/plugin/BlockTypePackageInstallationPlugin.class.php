@@ -79,7 +79,7 @@ class BlockTypePackageInstallationPlugin extends AbstractXMLPackageInstallationP
 	protected function validateImport(array $data) {
 		parent::validateImport($data);
 		
-		if (empty($data['blocktypename'])) {
+		if (empty($data['blockTypeName'])) {
 			throw new SystemException('Invalid blockTypeName', 0, 'The blockTypeName cannot be empty.');
 		}
 		$namespaces = explode('\\', $data['blockTypeClassName']);
