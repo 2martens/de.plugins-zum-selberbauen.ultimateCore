@@ -5,11 +5,11 @@
 jQuery(function($){
 	$.timepicker.regional['de'] = {
 		currentText: 'Jetzt',
-		closeText: 'Ausw√§hlen',
+		closeText: 'Ausw‰hlen',
 		ampm: false,
-		timeFormat: 'hh:mm tt',
+		timeFormat: 'HH:mm tt',
 		timeSuffix: '',
-		timeOnlyTitle: 'Uhrzeit ausw√§hlen',
+		timeOnlyTitle: 'Uhrzeit ausw‰hlen',
 		timeText: 'Zeit',
 		hourText: 'Stunde',
 		minuteText: 'Minute',
