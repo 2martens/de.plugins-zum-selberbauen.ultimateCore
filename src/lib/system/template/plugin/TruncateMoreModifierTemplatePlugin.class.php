@@ -49,7 +49,7 @@ use wcf\util\StringUtil;
  * @subpackage	system.template.plugin
  * @category	Community Framework
  */
-class TruncateMoreModifierTemplatePlugin extends IModifierTemplatePlugin {
+class TruncateMoreModifierTemplatePlugin implements IModifierTemplatePlugin {
 	/**
 	 * @see \wcf\system\template\plugin\IModifierTemplatePlugin::execute()
 	 */
