@@ -9,7 +9,7 @@
         
         <isapplication>0</isapplication>
         <version>1.0.0 Alpha 1</version>
-        <date>2012-12-28</date>    
+        <date>2013-05-22</date>    
     </packageinformation>
     
     <authorinformation>
@@ -19,16 +19,11 @@
     
     <requiredpackages>
         <requiredpackage minversion="2.0.0*">com.woltlab.wcf</requiredpackage>
-        <requiredpackage minversion="1.0.0*">com.woltlab.wcf.bbcode</requiredpackage>
-        <requiredpackage minversion="1.0.0*">com.woltlab.wcf.comment</requiredpackage>
     </requiredpackages>
     
     <instructions type="install">
         <!-- files -->
         <instruction type="file">files.tar</instruction>
-        
-        <!-- other -->
-        <instruction type="sql">install.sql</instruction>
         
         <!-- xmls -->
         <instruction type="packageInstallationPlugin">packageInstallationPlugin.xml</instruction>
