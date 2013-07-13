@@ -42,7 +42,7 @@ use wcf\data\comment\response\CommentResponseList;
  * @subpackage	system.cache.builder
  * @category	Community Framework
  */
-class CommentResponseCacheBuilder implements AbstractCacheBuilder {
+class CommentResponseCacheBuilder extends AbstractCacheBuilder {
 	/**
 	 * @see \wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */

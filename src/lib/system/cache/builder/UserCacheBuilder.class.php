@@ -42,7 +42,7 @@ use wcf\data\user\UserList;
  * @subpackage	system.cache.builder
  * @category	Community Framework
  */
-class UserCacheBuilder implements AbstractCacheBuilder {
+class UserCacheBuilder extends AbstractCacheBuilder {
 	/**
 	 * @see \wcf\system\cache\builder\AbstractCacheBuilder::getData()
 	 */
