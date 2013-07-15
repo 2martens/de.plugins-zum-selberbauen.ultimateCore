@@ -121,7 +121,14 @@ class UltimateLinkHandler extends LinkHandler {
 			if ($encodeTitle) $parameters['title'] = rawurlencode($parameters['title']);
 		}
 		
-		$parameters['controller'] = $controller;
+		if ($controller !== null) {
+			$parameters['controller'] = $controller;
+		}
+		else
+		{
+			unset($parameters['controller']);
+		}
+		
 		$routeURL = RouteHandler::getInstance()->buildRoute($parameters, $isACP);
 		if (!$isRaw && !empty($url)) {
 			$routeURL .= (strpos($routeURL, '?') === false) ? '?' : '&';

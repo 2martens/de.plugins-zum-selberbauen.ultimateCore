@@ -24,16 +24,16 @@ class LinkExtendedBlockTemplatePlugin extends LinkBlockTemplatePlugin {
 		if (!array_key_exists('controller', $tagArgs)) {
 			$tagArgs['controller'] = null;
 		}
-	
+		
 		if (!isset($tagArgs['application']) || empty($tagArgs['application'])) {
 			$tagArgs['application'] = 'wcf';
 		}
-	
+		
 		if (isset($tagArgs['encode']) && !$tagArgs['encode']) {
 			unset($tagArgs['encode']);
 			return UltimateLinkHandler::getInstance()->getLink($tagArgs['controller'], $tagArgs, $blockContent);
 		}
-	
+		
 		return StringUtil::encodeHTML(UltimateLinkHandler::getInstance()->getLink($tagArgs['controller'], $tagArgs, $blockContent));
 	}
 }
