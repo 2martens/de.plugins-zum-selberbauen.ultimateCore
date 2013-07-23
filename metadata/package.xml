@@ -27,7 +27,6 @@
         
         <!-- xmls -->
         <instruction type="eventListener">eventListener.xml</instruction>
-        <instruction type="packageInstallationPlugin">packageInstallationPlugin.xml</instruction>
         <instruction type="bbcode">bbcode.xml</instruction>
         <instruction type="language">language/*.xml</instruction>
     </instructions>
