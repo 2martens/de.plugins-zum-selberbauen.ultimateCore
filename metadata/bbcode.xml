@@ -6,5 +6,28 @@
 			<allowedchildren>none</allowedchildren>
 			<!-- <wysiwygicon>insertCodeM.png</wysiwygicon>-->
 		</bbcode>
+        <bbcode name="link">
+            <classname>wcf\system\bbcode\LinkBBCode</classname>
+            <allowedchildren>none^img,b,i,u,s,sub,sup,color,size,font</allowedchildren>
+            <attributes>
+                <!-- the first two attributes may be used for parameters for Ultimate Link Handler -->
+                <attribute name="0">
+                    <required>1</required>
+                    <usetext>0</usetext>
+                    <validationpattern>^.+$</validationpattern>
+                </attribute>
+                <attribute name="1">
+                    <required>0</required>
+                    <usetext>0</usetext>
+                    <validationpattern>^.+$</validationpattern>
+                </attribute>
+                <!-- if used the third attribute stands for the post route URL -->
+                <attribute name="2">
+                    <required>0</required>
+                    <usetext>0</usetext>
+                    <validationpattern>^.+$</validationpattern>
+                </attribute>
+            </attributes>
+        </bbcode>
 	</import>
 </data>
