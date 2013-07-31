@@ -10,7 +10,9 @@
             <classname>wcf\system\bbcode\LinkBBCode</classname>
             <allowedchildren>none^img,b,i,u,s,sub,sup,color,size,font</allowedchildren>
             <attributes>
-                <!-- the first two attributes may be used for parameters for Ultimate Link Handler -->
+                <!-- all three attributes can be used for parameters relayed to the UltimateLinkHandler -->
+                <!-- these parameters have to be formed like key=value -->
+                <!-- a maximum of one (the last of the used attributes) attribute can be used as postRouteURL and has to contain a # -->
                 <attribute name="0">
                     <required>1</required>
                     <usetext>0</usetext>
@@ -21,11 +23,28 @@
                     <usetext>0</usetext>
                     <validationpattern>^.+$</validationpattern>
                 </attribute>
-                <!-- if used the third attribute stands for the post route URL -->
                 <attribute name="2">
                     <required>0</required>
                     <usetext>0</usetext>
                     <validationpattern>^.+$</validationpattern>
+                </attribute>
+            </attributes>
+        </bbcode>
+        <bbcode name="anchor">
+            <classname>wcf\system\bbcode\AnchorBBCode</classname>
+            <allowedchildren>none^img,b,i,u,s,sub,sup,color,size,font</allowedchildren>
+            <attributes>
+                <!-- the first attribute is used for the id attribute of the anchor element -->
+                <attribute name="0">
+                    <required>1</required>
+                    <usetext>0</usetext>
+                    <validationpattern>^.+$</validationpattern>
+                </attribute>
+                <!-- the second attribute is used for the type of the anchor; if not existing a is taken -->
+                <attribute name="1">
+                    <required>0</required>
+                    <usetext>0</usetext>
+                    <validationpattern>^(?:a|h1|h2|h3|h4|h5|h6)$</validationpattern>
                 </attribute>
             </attributes>
         </bbcode>
