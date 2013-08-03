@@ -33,7 +33,7 @@ class DateExtendedModifierTemplatePlugin extends DateModifierTemplatePlugin {
 		//$dateTimeObject->setTimezone(WCF::getUser()->getTimeZone());
 		$date = DateUtil::format(
 			$dateTimeObject,
-			(!empty($tagArgs[2])) ? $tagArgs[2] : DateUtil::DATE_FORMAT
+			(!empty($tagArgs[1])) ? $tagArgs[1] : DateUtil::DATE_FORMAT
 		);
 		$time = DateUtil::format($dateTimeObject, DateUtil::TIME_FORMAT);
 		$formattedDate = parent::execute($tagArgs, $tplObj);
