@@ -71,39 +71,46 @@ class PagesExtendedFunctionTemplatePlugin extends PagesFunctionTemplatePlugin {
 	
 		if ($tagArgs['pages'] > 1) {
 			// create and encode route link
-			$link = StringUtil::encodeHTML(UltimateLinkHandler::getInstance()->getLink($tagArgs['controller'], $tagArgs, $tagArgs['link']));
-				
+			$parameters = $tagArgs;
+			if (isset($parameters['pages'])) unset($parameters['pages']);
+			if (isset($parameters['page'])) unset($parameters['page']);
+			if (isset($parameters['link'])) unset($parameters['link']);
+			if (isset($parameters['print'])) unset($parameters['print']);
+			if (isset($parameters['assign'])) unset($parameters['assign']);
+			$link = StringUtil::encodeHTML(UltimateLinkHandler::getInstance()->getLink($tagArgs['controller'], $parameters, $tagArgs['link']));
+			
 			if (!isset($tagArgs['page'])) {
 				if (($tagArgs['page'] = $tplObj->get('pageNo')) === null) {
 					$tagArgs['page'] = 0;
 				}
 			}
-				
+			
 			// open div and ul
 			$html .= "<nav class=\"pageNavigation\" data-link=\"".$link."\" data-pages=\"".$tagArgs['pages']."\">\n<ul>\n";
-				
+			
 			// previous page
 			$html .= $this->makePreviousLink($link, $tagArgs['page']);
-				
+			
 			// first page
 			$html .= $this->makeLink($link, 1, $tagArgs['page'], $tagArgs['pages']);
-				
+			
 			// calculate page links
 			$maxLinks = parent::SHOW_LINKS - 4;
 			$linksBeforePage = $tagArgs['page'] - 2;
 			if ($linksBeforePage < 0) $linksBeforePage = 0;
+			
 			$linksAfterPage = $tagArgs['pages'] - ($tagArgs['page'] + 1);
 			if ($linksAfterPage < 0) $linksAfterPage = 0;
 			if ($tagArgs['page'] > 1 && $tagArgs['page'] < $tagArgs['pages']) {
 				$maxLinks--;
 			}
-				
+			
 			$half = $maxLinks / 2;
 			$left = $right = $tagArgs['page'];
 			if ($left < 1) $left = 1;
 			if ($right < 1) $right = 1;
 			if ($right > $tagArgs['pages'] - 1) $right = $tagArgs['pages'] - 1;
-				
+			
 			if ($linksBeforePage >= $half) {
 				$left -= $half;
 			}
@@ -111,7 +118,7 @@ class PagesExtendedFunctionTemplatePlugin extends PagesFunctionTemplatePlugin {
 				$left -= $linksBeforePage;
 				$right += $half - $linksBeforePage;
 			}
-				
+			
 			if ($linksAfterPage >= $half) {
 				$right += $half;
 			}
@@ -119,12 +126,12 @@ class PagesExtendedFunctionTemplatePlugin extends PagesFunctionTemplatePlugin {
 				$right += $linksAfterPage;
 				$left -= $half - $linksAfterPage;
 			}
-				
+			
 			$right = intval(ceil($right));
 			$left = intval(ceil($left));
 			if ($left < 1) $left = 1;
 			if ($right > $tagArgs['pages']) $right = $tagArgs['pages'];
-				
+			
 			// left ... links
 			if ($left > 1) {
 				if ($left - 1 < 2) {
@@ -134,12 +141,12 @@ class PagesExtendedFunctionTemplatePlugin extends PagesFunctionTemplatePlugin {
 					$html .= '<li class="button jumpTo"><a title="'.WCF::getLanguage()->getDynamicVariable('wcf.global.page.jumpTo').'" class="jsTooltip">'.StringUtil::HELLIP.'</a></li>'."\n";
 				}
 			}
-				
+			
 			// visible links
 			for ($i = $left + 1; $i < $right; $i++) {
 				$html .= $this->makeLink($link, $i, $tagArgs['page'], $tagArgs['pages']);
 			}
-				
+			
 			// right ... links
 			if ($right < $tagArgs['pages']) {
 				if ($tagArgs['pages'] - $right < 2) {
@@ -149,23 +156,23 @@ class PagesExtendedFunctionTemplatePlugin extends PagesFunctionTemplatePlugin {
 					$html .= '<li class="button jumpTo"><a title="'.WCF::getLanguage()->getDynamicVariable('wcf.global.page.jumpTo').'" class="jsTooltip">'.StringUtil::HELLIP.'</a></li>'."\n";
 				}
 			}
-				
+			
 			// last page
 			$html .= $this->makeLink($link, $tagArgs['pages'], $tagArgs['page'], $tagArgs['pages']);
-				
+			
 			// next page
 			$html .= $this->makeNextLink($link, $tagArgs['page'], $tagArgs['pages']);
-				
+			
 			// close div and ul
 			$html .= "</ul></nav>\n";
 		}
-	
+		
 		// assign html output to template var
 		if (isset($tagArgs['assign'])) {
 			$tplObj->assign($tagArgs['assign'], $html);
 			if (!isset($tagArgs['print']) || !$tagArgs['print']) return '';
 		}
-	
+		
 		return $html;
 	}
 }
