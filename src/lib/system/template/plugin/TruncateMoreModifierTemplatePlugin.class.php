@@ -61,16 +61,23 @@ class TruncateMoreModifierTemplatePlugin implements IModifierTemplatePlugin {
 		$string = $tagArgs[0];
 		if (isset($tagArgs[1])) $length = intval($tagArgs[1]);
 		else throw new SystemException('Parameter length is missing');
-		if (isset($tagArgs[2])) $breakWords = (boolean) intval($tagArgs[2]);
+		if (isset($tagArgs[2])) $breakWords = (boolean) $tagArgs[2];
 		// fix for StringUtil
-		if ($length == 0) $length = strlen($string);
+		if ($length == 0) $length = StringUtil::length($string);
 		
 		// check if More-BBCode has been used
-		if ($position = strpos($string, '<a id="more">')) {
-			// if so cut the text after the more tag
-			$length = $position;
+		if (($position = StringUtil::indexOf($string, '<a id="more"')) !== false) {
+			// if that is so and the position is within the allowed length,
+			// cut the text after the more tag
+			if ($position < $length) {
+				$length = $position;
+			}
 		}
 		
-		return StringUtil::truncate($string, $length, '', $breakWords);
+		// calculate real needed length
+		$subString = StringUtil::substring($string, 0, $length);
+		$length = StringUtil::length(StringUtil::stripHtml($subString));
+		
+		return StringUtil::truncateHTML($string, $length, StringUtil::HELLIP, $breakWords);
 	}
 }
