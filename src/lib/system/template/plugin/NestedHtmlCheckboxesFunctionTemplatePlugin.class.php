@@ -67,6 +67,15 @@ class NestedHtmlCheckboxesFunctionTemplatePlugin extends HtmlCheckboxesFunctionT
 		if (!isset($tagArgs['separator'])) {
 			$tagArgs['separator'] = '';
 		}
+		
+		// get disabled values
+		if (isset($tagArgs['disabled'])){
+			if (!is_array($tagArgs['disabled'])) $tagArgs['disabled'] = array($tagArgs['disabled']);
+		}
+		else {
+			$tagArgs['disabled'] = array();
+		}
+		
 		$this->tagArgs = $tagArgs;
 		
 		// build html
