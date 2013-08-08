@@ -32,7 +32,7 @@ use wcf\system\WCF;
  * Caches the tag to object relation.
  * 
  * Provides one variable:
- * * integer[] objectTypeIDToTagID (tagID => objectTypeID)
+ * * integer[][] tagIDsToObjectTypeID (objectTypeID => array(=> tagID))
  * 
  * @author		Jim Martens
  * @copyright	2013 Jim Martens
@@ -47,7 +47,7 @@ class TagObjectCacheBuilder extends AbstractCacheBuilder {
 	 */
 	protected function rebuild(array $parameters) {
 		$data = array(
-			'objectTypeIDToTagID' => array()
+			'tagsIDToObjectTypeID' => array()
 		);
 		
 		$sql = 'SELECT tagID, objectTypeID
@@ -56,7 +56,10 @@ class TagObjectCacheBuilder extends AbstractCacheBuilder {
 		$statement->execute();
 		
 		while ($row = $statement->fetchArray()) {
-			$data['objectTypeIDToTagID'][intval($row['tagID'])] = intval($row['objectTypeID']);
+			if (!isset($data['tagIDsToObjectTypeID'][intval($row['objectTypeID'])])) {
+				$data['tagIDsToObjectTypeID'][intval($row['objectTypeID'])] = array();
+			}
+			$data['tagIDsToObjectTypeID'][intval($row['objectTypeID'])][] = intval($row['tagID']);
 		}
 		
 		return $data;
