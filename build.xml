@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Ultimate Core" default="build">
+	<property name="ultimateCMSRepoRequirements" location="../de.plugins-zum-selberbauen.ultimate/de.plugins-zum-selberbauen.ultimate/requirements" />
+	<target name="clean" description="Deletes old tar files.">
+		<delete>
+			<fileset dir="metadata" includes="**/*.tar"/>
+		</delete>
+		<delete>
+			<fileset dir="build" includes="**/*.tar*" />
+		</delete>
+		<delete>
+			<fileset dir="${ultimateCMSRepoRequirements}" includes="**/*ultimateCore.tar*" />
+		</delete>
+	</target>
+
+	<target name="pack" depends="clean" description="Packs the tar files.">
+		<tar destfile="metadata/files.tar">
+			<tarfileset dir="src">
+				<exclude name="templates/**" />
+				<exclude name="acp/templates/**" />
+			</tarfileset>
+		</tar>
+	</target>
+
+	<target name="build" depends="pack" description="Generates the package archive.">
+		<tar destfile="build/de.plugins-zum-selberbauen.ultimateCore.tar" 
+			 basedir="metadata"
+		/>
+		<gzip src="build/de.plugins-zum-selberbauen.ultimateCore.tar"
+			  destfile="build/de.plugins-zum-selberbauen.ultimateCore.tar.gz"
+		/>
+		<copy file="build/de.plugins-zum-selberbauen.ultimateCore.tar.gz"
+			todir="${ultimateCMSRepoRequirements}"
+		/>
+	</target>
+</project>
