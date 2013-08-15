@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/eventListener.xsd">
+	<import>
+		<!-- cache reset listener -->
+		<!-- user cache -->
+		<eventlistener>
+        	<eventclassname>wcf\acp\form\UserAddForm</eventclassname>
+        	<eventname>saved</eventname>
+        	<inherit>0</inherit>
+        	<listenerclassname>wcf\system\event\listener\CacheResetListener</listenerclassname>
+        </eventlistener>
+        <eventlistener>
+        	<eventclassname>wcf\acp\form\UserEditForm</eventclassname>
+        	<eventname>saved</eventname>
+        	<inherit>0</inherit>
+        	<listenerclassname>wcf\system\event\listener\CacheResetListener</listenerclassname>
+        </eventlistener>
+        <!-- /user cache -->
+        
+        <!-- general -->
+        <eventlistener>
+        	<eventclassname>wcf\acp\action\AJAXProxyAction</eventclassname>
+        	<eventname>executed</eventname>
+        	<inherit>0</inherit>
+        	<listenerclassname>wcf\system\event\listener\CacheResetListener</listenerclassname>
+        </eventlistener>
+        <!-- /general -->
+		<!-- /cache reset listener -->
+	</import>
+</data>
