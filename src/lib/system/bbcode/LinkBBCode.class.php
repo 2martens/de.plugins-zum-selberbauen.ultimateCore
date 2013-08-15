@@ -84,7 +84,8 @@ class LinkBBCode extends AbstractBBCode {
 			if (strpos($attribute, '=') !== false) {
 				$tmpSplit = explode('=', $attribute);
 				$arguments[$tmpSplit[0]] = $tmpSplit[1];
-			} elseif (strpos($attribute, '#') !== false) {
+			}
+			else if (strpos($attribute, '#') !== false) {
 				$arguments['url'] = $attribute;
 			}
 		}
