@@ -30,7 +30,7 @@ Additionally: Have a look at existing files to find out what they should look li
 I am running [PHP Codesniffer](https://github.com/squizlabs/PHP_CodeSniffer) to ensure most of my formatting rules. You SHOULD test your changes before submitting them with it.
 
 1. Install PHP Codesniffer, either via PEAR or via cloning it
-2. Execute the following command in the root of your clone of Ultimate CMS:
+2. Execute the following command in the root of your clone of Ultimate Core:
 
    ```sh
     $ phpcs -p --extensions=php --standard="`path/to`/CodeSniff/PzS" .
