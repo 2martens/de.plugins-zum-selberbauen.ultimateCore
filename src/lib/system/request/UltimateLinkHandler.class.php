@@ -118,14 +118,14 @@ class UltimateLinkHandler extends LinkHandler {
 			// remove illegal characters
 			$parameters['title'] = trim($this->titleRegex->replace($parameters['title'], '-'), '-');
 			// encode title
-			if ($encodeTitle) $parameters['title'] = rawurlencode($parameters['title']);
+			if ($encodeTitle) $parameters['title'] = rawurlencode(
+				$parameters['title']);
 		}
 		
 		if ($controller !== null) {
 			$parameters['controller'] = $controller;
 		}
-		else
-		{
+		else {
 			unset($parameters['controller']);
 		}
 		

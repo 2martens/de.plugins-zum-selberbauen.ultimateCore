@@ -59,8 +59,12 @@ class TruncateMoreModifierTemplatePlugin implements IModifierTemplatePlugin {
 		
 		// get values
 		$string = $tagArgs[0];
-		if (isset($tagArgs[1])) $length = intval($tagArgs[1]);
-		else throw new SystemException('Parameter length is missing');
+		if (isset($tagArgs[1])) {
+			$length = intval($tagArgs[1]);
+		}
+		else {
+			throw new SystemException('Parameter length is missing');
+		}
 		if (isset($tagArgs[2])) $breakWords = (boolean) $tagArgs[2];
 		// fix for StringUtil
 		if ($length == 0) $length = StringUtil::length($string);
