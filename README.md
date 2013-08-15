@@ -3,11 +3,13 @@ Ultimate Core
 
 Provides some core functionality for the Ultimate CMS.
 
-
 Version notes
 -------------
 
 The currently available source code represents an early beta version of Ultimate Core and should not be used in productive environments.
+
+* Dev-Branch: [![Build Status](https://travis-ci.org/frmwrk123/de.plugins-zum-selberbauen.ultimateCore.png?branch=dev)](https://travis-ci.org/frmwrk123/de.plugins-zum-selberbauen.ultimateCore)
+* Master-Branch: [![Build Status](https://travis-ci.org/frmwrk123/de.plugins-zum-selberbauen.ultimateCore.png?branch=master)](https://travis-ci.org/frmwrk123/de.plugins-zum-selberbauen.ultimateCore)
 
 Contribution
 ------------
