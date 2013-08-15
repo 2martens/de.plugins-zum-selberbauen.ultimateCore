@@ -55,10 +55,10 @@ class CacheResetListener implements IEventListener {
 				if ($eventObj->className == 'wcf\data\user\UserAction' && $eventName == 'delete') {
 					$this->resetUserCache();
 				}
-				elseif ($eventObj->className == 'wcf\data\comment\CommentAction' && $eventName == 'addComment') {
+				else if ($eventObj->className == 'wcf\data\comment\CommentAction' && $eventName == 'addComment') {
 					$this->resetCommentCache();
 				}
-				elseif ($eventObj->className == 'wcf\data\comment\CommentAction' && $eventName == 'addResponse') {
+				else if ($eventObj->className == 'wcf\data\comment\CommentAction' && $eventName == 'addResponse') {
 					$this->resetCommentResponseCache();
 				}
 				break;
