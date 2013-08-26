@@ -26,5 +26,15 @@
         </eventlistener>
         <!-- /general -->
 		<!-- /cache reset listener -->
+		
+		<!-- ACPFirstTime listener -->
+        <eventlistener>
+            <eventclassname>wcf\acp\page\PackageListPage</eventclassname>
+            <eventname>readData</eventname>
+            <environment>admin</environment>
+            <inherit>0</inherit>
+            <listenerclassname>wcf\system\event\listener\ACPFirstTimeListener</listenerclassname>
+        </eventlistener>
+        <!-- /ACPFirstTimeListener -->
 	</import>
 </data>
