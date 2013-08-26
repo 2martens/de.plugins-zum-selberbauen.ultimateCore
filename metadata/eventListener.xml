@@ -29,7 +29,7 @@
 		
 		<!-- ACPFirstTime listener -->
         <eventlistener>
-            <eventclassname>ultimate\acp\page\PackageListPage</eventclassname>
+            <eventclassname>wcf\acp\page\PackageListPage</eventclassname>
             <eventname>readData</eventname>
             <environment>admin</environment>
             <inherit>0</inherit>
