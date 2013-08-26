@@ -22,7 +22,7 @@
 		<!-- beta 2 update tars -->
 		<tar destfile="metadata/files_update.b1.tar">
 			<tarfileset dir="src">
-				<include name="**/ACPFirstTimeListener" />
+				<include name="**/ACPFirstTimeListener*" />
 			</tarfileset>
 		</tar>
 	</target>
