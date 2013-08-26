@@ -10,7 +10,7 @@
 	<target name="prepare" depends="clean" description="Prepares the build.">
 		<mkdir dir="build" />
 	</target>
-
+	
 	<target name="pack" depends="prepare" description="Packs the tar files.">
 		<tar destfile="metadata/files.tar">
 			<tarfileset dir="src">
@@ -18,8 +18,15 @@
 				<exclude name="acp/templates/**" />
 			</tarfileset>
 		</tar>
+		
+		<!-- beta 2 update tars -->
+		<tar destfile="metadata/files_update.b1.tar">
+			<tarfileset dir="src">
+				<include name="**/ACPFirstTimeListener" />
+			</tarfileset>
+		</tar>
 	</target>
-
+	
 	<target name="build" depends="pack" description="Generates the package archive.">
 		<tar destfile="build/de.plugins-zum-selberbauen.ultimateCore.tar" 
 			 basedir="metadata"
