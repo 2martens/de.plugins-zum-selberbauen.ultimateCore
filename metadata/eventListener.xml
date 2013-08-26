@@ -29,15 +29,7 @@
 		
 		<!-- ACPFirstTime listener -->
         <eventlistener>
-            <eventclassname>wcf\acp\action\InstallPackageAction</eventclassname>
-            <eventname>executed</eventname>
-            <environment>admin</environment>
-            <inherit>0</inherit>
-            <listenerclassname>wcf\system\event\listener\ACPFirstTimeListener</listenerclassname>
-        </eventlistener>
-        
-        <eventlistener>
-            <eventclassname>ultimate\acp\page\IndexPage</eventclassname>
+            <eventclassname>ultimate\acp\page\PackageListPage</eventclassname>
             <eventname>readData</eventname>
             <environment>admin</environment>
             <inherit>0</inherit>

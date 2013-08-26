@@ -65,25 +65,13 @@ class ACPFirstTimeListener implements IEventListener {
 	 * @param	string	$eventName
 	 */
 	public function execute($eventObj, $className, $eventName) {
-		if ($className == 'wcf\acp\action\InstallPackageAction') {
-			if ($eventObj->data['progress'] == 100) {
-				// do the following only for the Ultimate CMS
-				$dispatcher = $eventObj->installation;
-				$package = $dispatcher->package;
-				$packageName = $package->package;
-				
-				if ($packageName != 'de.plugins-zum-selberbauen.ultimate') {
-					return;
-				}
-				
-				$abbreviations = ApplicationCacheBuilder::getInstance()->getData(array(), 'abbreviation');
-				$appID = $abbreviations['ultimate'];
-				$applications = ApplicationCacheBuilder::getInstance()->getData(array(), 'application');
-				$application = $applications[$appID];
-				$editor = new ApplicationEditor($application);
-				$editor->setAsPrimary();
-				$eventObj->data['redirectLocation'] = $application->getPageURL() . 'acp/index.php/Index/' . SID_ARG_1ST;
-			}
+		// if we are in WCF ACP, don't execute the event listener
+		if (PACKAGE_ID == 1) {
+			return;
+		}
+		
+		// if Ultimate CMS is not installed, don't execute event listener
+		if (!defined('ULTIMATE_DIR')) {
 			return;
 		}
 		
