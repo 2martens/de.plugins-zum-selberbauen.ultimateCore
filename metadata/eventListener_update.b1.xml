@@ -7,7 +7,7 @@
             <eventname>executed</eventname>
             <environment>admin</environment>
             <inherit>0</inherit>
-            <listenerclassname>ultimate\system\event\listener\ACPFirstTimeListener</listenerclassname>
+            <listenerclassname>wcf\system\event\listener\ACPFirstTimeListener</listenerclassname>
         </eventlistener>
         
         <eventlistener>
@@ -15,7 +15,7 @@
             <eventname>readData</eventname>
             <environment>admin</environment>
             <inherit>0</inherit>
-            <listenerclassname>ultimate\system\event\listener\ACPFirstTimeListener</listenerclassname>
+            <listenerclassname>wcf\system\event\listener\ACPFirstTimeListener</listenerclassname>
         </eventlistener>
         <!-- /ACPFirstTimeListener -->
 	</import>
