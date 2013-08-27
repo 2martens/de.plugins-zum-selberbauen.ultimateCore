@@ -67,10 +67,10 @@ class TruncateMoreModifierTemplatePlugin implements IModifierTemplatePlugin {
 		}
 		if (isset($tagArgs[2])) $breakWords = (boolean) $tagArgs[2];
 		// fix for StringUtil
-		if ($length == 0) $length = StringUtil::length($string);
+		if ($length == 0) $length = mb_strlen($string);
 		
 		// check if More-BBCode has been used
-		if (($position = StringUtil::indexOf($string, '<a id="more"')) !== false) {
+		if (($position = mb_mb_strpos($string, '<a id="more"')) !== false) {
 			// if that is so and the position is within the allowed length,
 			// cut the text after the more tag
 			if ($position < $length) {
@@ -79,8 +79,8 @@ class TruncateMoreModifierTemplatePlugin implements IModifierTemplatePlugin {
 		}
 		
 		// calculate real needed length
-		$subString = StringUtil::substring($string, 0, $length);
-		$length = StringUtil::length(StringUtil::stripHtml($subString));
+		$subString = mb_substr($string, 0, $length);
+		$length = mb_strlen(StringUtil::stripHtml($subString));
 		
 		return StringUtil::truncateHTML($string, $length, StringUtil::HELLIP, $breakWords);
 	}
