@@ -81,11 +81,11 @@ class LinkBBCode extends AbstractBBCode {
 	protected function splitArguments(array $attributes) {
 		$arguments = array();
 		foreach ($attributes as $attribute) {
-			if (strpos($attribute, '=') !== false) {
+			if (mb_strpos($attribute, '=') !== false) {
 				$tmpSplit = explode('=', $attribute);
 				$arguments[$tmpSplit[0]] = $tmpSplit[1];
 			}
-			else if (strpos($attribute, '#') !== false) {
+			else if (mb_strpos($attribute, '#') !== false) {
 				$arguments['url'] = $attribute;
 			}
 		}
