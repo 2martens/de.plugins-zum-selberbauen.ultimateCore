@@ -87,7 +87,7 @@ class UltimateLinkHandler extends LinkHandler {
 		}
 		
 		// remove anchor before parsing
-		if (($pos = strpos($url, '#')) !== false) {
+		if (($pos = mb_strpos($url, '#')) !== false) {
 			$anchor = substr($url, $pos);
 			$url = substr($url, 0, $pos);
 		}
@@ -131,19 +131,19 @@ class UltimateLinkHandler extends LinkHandler {
 		
 		$routeURL = RouteHandler::getInstance()->buildRoute($parameters, $isACP);
 		if (!$isRaw && !empty($url)) {
-			$routeURL .= (strpos($routeURL, '?') === false) ? '?' : '&';
+			$routeURL .= (mb_strpos($routeURL, '?') === false) ? '?' : '&';
 		}
 		
 		// encode certain characters
 		if (!empty($url)) {
-			$url = StringUtil::replace(array('[', ']'), array('%5B', '%5D'), $url);
+			$url = str_replace(array('[', ']'), array('%5B', '%5D'), $url);
 		}
 		
 		$url = $routeURL . $url;
 		
 		// append session id
 		if ($appendSession) {
-			$url .= (strpos($url, '?') === false) ? SID_ARG_1ST : SID_ARG_2ND_NOT_ENCODED;
+			$url .= (mb_strpos($url, '?') === false) ? SID_ARG_1ST : SID_ARG_2ND_NOT_ENCODED;
 		}
 		
 		// handle applications
