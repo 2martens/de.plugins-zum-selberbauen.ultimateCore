@@ -47,7 +47,7 @@ class TagObjectCacheBuilder extends AbstractCacheBuilder {
 	 */
 	protected function rebuild(array $parameters) {
 		$data = array(
-			'tagsIDToObjectTypeID' => array()
+			'tagIDsToObjectTypeID' => array()
 		);
 		
 		$sql = 'SELECT tagID, objectTypeID
