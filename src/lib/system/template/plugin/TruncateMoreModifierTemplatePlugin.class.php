@@ -70,7 +70,7 @@ class TruncateMoreModifierTemplatePlugin implements IModifierTemplatePlugin {
 		if ($length == 0) $length = mb_strlen($string);
 		
 		// check if More-BBCode has been used
-		if (($position = mb_mb_strpos($string, '<a id="more"')) !== false) {
+		if (($position = mb_strpos($string, '<a id="more"')) !== false) {
 			// if that is so and the position is within the allowed length,
 			// cut the text after the more tag
 			if ($position < $length) {
