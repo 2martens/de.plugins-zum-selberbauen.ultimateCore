@@ -19,10 +19,11 @@
 			</tarfileset>
 		</tar>
 		
-		<!-- beta 2 update tars -->
-		<tar destfile="metadata/files_update.b1.tar">
+		<!-- beta 3 update tars -->
+		<tar destfile="metadata/files_update.b2.tar">
 			<tarfileset dir="src">
-				<include name="**/ACPFirstTimeListener*" />
+				<include name="**/TagObjectCacheBuilder*" />
+				<include name="**/TruncateMoreModifierTemplatePlugin*" />
 			</tarfileset>
 		</tar>
 	</target>
