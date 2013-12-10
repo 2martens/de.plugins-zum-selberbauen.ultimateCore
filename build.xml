@@ -18,14 +18,6 @@
 				<exclude name="acp/templates/**" />
 			</tarfileset>
 		</tar>
-		
-		<!-- beta 3 update tars -->
-		<tar destfile="metadata/files_update.b2.tar">
-			<tarfileset dir="src">
-				<include name="**/TagObjectCacheBuilder*" />
-				<include name="**/TruncateMoreModifierTemplatePlugin*" />
-			</tarfileset>
-		</tar>
 	</target>
 	
 	<target name="build" depends="pack" description="Generates the package archive.">
