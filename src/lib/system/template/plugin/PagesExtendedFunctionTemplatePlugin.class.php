@@ -26,6 +26,7 @@
  * @category	Community Framework
  */
 namespace wcf\system\template\plugin;
+use wcf\system\exception\SystemException;
 use wcf\system\request\UltimateLinkHandler;
 use wcf\system\template\TemplateEngine;
 use wcf\system\WCF;
