@@ -18,6 +18,13 @@
 				<exclude name="acp/templates/**" />
 			</tarfileset>
 		</tar>
+		
+		<!-- rc 1 update tars -->
+		<tar destfile="metadata/files_update.rc1.tar">
+			<tarfileset dir="src">
+				<include name="lib/system/template/plugin/PagesExtendedFunction*" />
+			</tarfileset>
+		</tar>
 	</target>
 	
 	<target name="build" depends="pack" description="Generates the package archive.">
