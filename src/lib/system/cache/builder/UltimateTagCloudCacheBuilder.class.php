@@ -79,7 +79,7 @@ class UltimateTagCloudCacheBuilder extends TagCloudCacheBuilder {
 					$row['counter'] = $tagIDs[$row['tagID']];
 					$this->tags[$row['tagID']] = new TagCloudTag(new Tag(null, $row));
 				}
-	
+				
 				// sort by counter
 				uasort($this->tags, array('self', 'compareTags'));
 			}

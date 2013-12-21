@@ -45,4 +45,42 @@ class UltimateTagCloud extends TagCloud {
 	protected function loadCache() {
 		$this->tags = UltimateTagCloudCacheBuilder::getInstance()->getData($this->languageIDs);
 	}
+	
+	/**
+	 * Gets a list of weighted tags.
+	 *
+	 * @param	integer				$slice
+	 * @return	array<\wcf\data\tag\TagCloudTag>	the tags to get
+	 */
+	public function getTags($slice = 50) {
+		// slice list
+		$tags = array_slice($this->tags, 0, min($slice, count($this->tags)), true);
+		
+		// get min / max counter
+		foreach ($tags as $tag) {
+			if ($tag->counter > $this->maxCounter) $this->maxCounter = $tag->counter;
+			if ($tag->counter < $this->minCounter) $this->minCounter = $tag->counter;
+		}
+		
+		// assign sizes
+		foreach ($tags as $tag) {
+			$tag->setSize($this->calculateSize($tag->counter));
+		}
+		
+		// sort alphabetically
+		$kSortArray = array();
+		foreach ($tags as $tag) {
+			$kSortArray[$tag->__get('name')] = $tag;
+		}
+		
+		ksort($kSortArray);
+		$returnArray = array();
+		
+		foreach ($kSortArray as $tag) {
+			$returnArray[$tag->__get('tagID')] = $tag;
+		}
+		
+		// return tags
+		return $returnArray;
+	}
 }
