@@ -49,8 +49,8 @@ class UltimateTagCloud extends TagCloud {
 	/**
 	 * Gets a list of weighted tags.
 	 *
-	 * @param	integer				$slice
-	 * @return	array<\wcf\data\tag\TagCloudTag>	the tags to get
+	 * @param	integer						$slice
+	 * @return	\wcf\data\tag\TagCloudTag[]	the tags to get
 	 */
 	public function getTags($slice = 50) {
 		// slice list
@@ -68,16 +68,16 @@ class UltimateTagCloud extends TagCloud {
 		}
 		
 		// sort alphabetically
-		$kSortArray = array();
-		foreach ($tags as $tag) {
-			$kSortArray[$tag->__get('name')] = $tag;
+		$sortArray = array();
+		foreach ($tags as $tagID => $tag) {
+			$sortArray[$tagID] = $tag->__get('name');
 		}
 		
-		ksort($kSortArray);
+		asort($sortArray);
 		$returnArray = array();
 		
-		foreach ($kSortArray as $tag) {
-			$returnArray[$tag->__get('tagID')] = $tag;
+		foreach ($sortArray as $tagID => $name) {
+			$returnArray[$tagID] = $tags[$tagID];
 		}
 		
 		// return tags
