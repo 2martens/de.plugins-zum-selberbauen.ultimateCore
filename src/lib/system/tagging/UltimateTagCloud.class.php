@@ -83,4 +83,19 @@ class UltimateTagCloud extends TagCloud {
 		// return tags
 		return $returnArray;
 	}
+	
+	/**
+	 * Returns the size of a tag with given number of uses for a weighted list.
+	 *
+	 * @param	integer		$counter
+	 * @return	double
+	 */
+	private function calculateSize($counter) {
+		if ($this->maxCounter == $this->minCounter) {
+			return 100;
+		}
+		else {
+			return (self::MAX_FONT_SIZE - self::MIN_FONT_SIZE) / ($this->maxCounter - $this->minCounter) * $counter + self::MIN_FONT_SIZE - ((self::MAX_FONT_SIZE - self::MIN_FONT_SIZE) / ($this->maxCounter - $this->minCounter)) * $this->minCounter;
+		}
+	}
 }
