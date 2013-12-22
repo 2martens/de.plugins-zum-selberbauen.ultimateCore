@@ -19,11 +19,12 @@
 			</tarfileset>
 		</tar>
 		
-		<!-- beta 3 update tars -->
-		<tar destfile="metadata/files_update.b2.tar">
+		<!-- rc 1 update tars -->
+		<tar destfile="metadata/files_update.rc1.tar">
 			<tarfileset dir="src">
-				<include name="**/TagObjectCacheBuilder*" />
-				<include name="**/TruncateMoreModifierTemplatePlugin*" />
+				<include name="lib/system/cache/builder/UltimateTagCloudCacheBuilder*" />
+				<include name="lib/system/tagging/UltimateTagCloud*" />
+				<include name="lib/system/template/plugin/PagesExtendedFunction*" />
 			</tarfileset>
 		</tar>
 	</target>
