@@ -28,10 +28,9 @@ abstract class AbstractVersionableDatabaseObject extends DatabaseObject implemen
 		$objectIDName = static::getDatabaseTableIndexName();
 		$versionIDName = static::getVersionIDName();
 		
-		$sql = 'SELECT   '.$versionIDName.'
+		$sql = 'SELECT   MAX('.$versionIDName.')
 		        FROM     '.static::getDatabaseVersionTableName().'
-		        WHERE    '.$objectIDName.' = ?
-		        ORDER BY '.$versionIDName.' DESC';
+		        WHERE    '.$objectIDName.' = ?';
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->$objectIDName));
 		
