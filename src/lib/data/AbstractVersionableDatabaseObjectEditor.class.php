@@ -16,7 +16,7 @@ abstract class AbstractVersionableDatabaseObjectEditor extends DatabaseObjectEdi
 	/**
 	 * Creates a new version with the given data.
 	 * 
-	 * The parameters array MUST NOT contain a version ID, but it MUST contain an objectID.
+	 * The parameters array MUST NOT contain a version ID.
 	 * 
 	 * @param	array	$parameters	associative array
 	 * @return	\wcf\data\IVersion
@@ -24,6 +24,7 @@ abstract class AbstractVersionableDatabaseObjectEditor extends DatabaseObjectEdi
 	public function createVersion(array $parameters) {
 		$keys = $values = '';
 		$statementParameters = array();
+		$parameters[static::getDatabaseTableIndexName()] = $this->getObjectID();
 		foreach ($parameters as $key => $value) {
 			if (!empty($keys)) {
 				$keys .= ',';
@@ -45,9 +46,14 @@ abstract class AbstractVersionableDatabaseObjectEditor extends DatabaseObjectEdi
 		$newVersionID = $row[static::getVersionIDName()] + 1;
 		
 		// include the new version ID in the keys and values
+		if (!empty($keys)) {
+			$keys .= ',';
+			$values .= ',';
+		}
 		$keys .= static::getVersionIDName();
 		$values .= '?';
 		$statementParameters[] = $newVersionID;
+		
 		
 		// actually insert data into database
 		$sql = 'INSERT INTO '.static::getDatabaseVersionTableName().'
@@ -57,6 +63,7 @@ abstract class AbstractVersionableDatabaseObjectEditor extends DatabaseObjectEdi
 		$statement->execute($statementParameters);
 		
 		$versionClassName = static::getVersionClassName();
+		
 		return new $versionClassName($newVersionID);
 	}
 	

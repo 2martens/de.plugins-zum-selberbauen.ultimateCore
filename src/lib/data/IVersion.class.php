@@ -11,7 +11,7 @@ namespace wcf\data;
  * @subpackage	data
  * @category	Community Framework
  */
-interface IVersion {
+interface IVersion extends IStorableObject {
 	/**
 	 * Returns the number of this version.
 	 * 
@@ -23,12 +23,20 @@ interface IVersion {
 	public function getVersionNumber();
 	
 	/**
-	 * Returns if this version is already released.
+	 * Checks if this version is already released.
 	 * 
 	 * @api
 	 * @return	boolean
 	 */
 	public function isReleased();
+	
+	/**
+	 * Checks if the version is visible for the current user.
+	 * 
+	 * @api
+	 * @return	boolean
+	 */
+	public function isVisible();
 	
 	/**
 	 * Returns the saved data.

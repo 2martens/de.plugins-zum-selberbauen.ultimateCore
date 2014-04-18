@@ -13,10 +13,18 @@ namespace wcf\data;
  */
 interface IVersionableDatabaseObject {
 	/**
-	 * Returns the current version.
+	 * Returns the current version (most recent version that is released).
 	 * 
 	 * @api
 	 * @return	\wcf\data\IVersion
 	 */
-	public function getVersion();
+	public function getCurrentVersion();
+	
+	/**
+	 * Returns all available versions (in descending order).
+	 * 
+	 * @api
+	 * @return	\wcf\data\IVersion[]
+	 */
+	public function getVersions();
 }
