@@ -16,8 +16,6 @@ abstract class AbstractVersionableDatabaseObjectEditor extends DatabaseObjectEdi
 	/**
 	 * Creates a new version with the given data.
 	 * 
-	 * The parameters array MUST NOT contain a version ID.
-	 * 
 	 * @param	array	$parameters	associative array
 	 * @return	\wcf\data\IVersion
 	 */
@@ -37,22 +35,22 @@ abstract class AbstractVersionableDatabaseObjectEditor extends DatabaseObjectEdi
 		}
 		
 		// retrieve next version id for current object
-		$sql = 'SELECT MAX('.static::getVersionIDName().')
+		$sql = 'SELECT MAX(versionNumber)
 		        FROM   '.static::getDatabaseVersionTableName().'
 		        WHERE  '.static::getDatabaseTableIndexName().' = ?';
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->getObjectID()));
 		$row = $statement->fetchArray();
-		$newVersionID = $row[static::getVersionIDName()] + 1;
+		$newVersionNumber = $row['versionNumber'] + 1;
 		
 		// include the new version ID in the keys and values
 		if (!empty($keys)) {
 			$keys .= ',';
 			$values .= ',';
 		}
-		$keys .= static::getVersionIDName();
+		$keys .= 'versionNumber';
 		$values .= '?';
-		$statementParameters[] = $newVersionID;
+		$statementParameters[] = $newVersionNumber;
 		
 		
 		// actually insert data into database
@@ -64,14 +62,13 @@ abstract class AbstractVersionableDatabaseObjectEditor extends DatabaseObjectEdi
 		
 		$versionClassName = static::getVersionClassName();
 		
-		return new $versionClassName($newVersionID);
+		return new $versionClassName($newVersionNumber);
 	}
 	
 	/**
 	 * @see \wcf\data\IVersionableDatabaseObjectEditor::updateVersion()
 	 */
 	public function updateVersion($versionID, array $parameters = array()) {
-		$objectIDName = static::getDatabaseTableIndexName();
 		$versionIDName = static::getVersionIDName();
 		
 		if (empty($parameters)) return;
@@ -83,13 +80,11 @@ abstract class AbstractVersionableDatabaseObjectEditor extends DatabaseObjectEdi
 			$updateSQL .= $key . ' = ?';
 			$statementParameters[] = $value;
 		}
-		$statementParameters[] = $this->getObjectID();
 		$statementParameters[] = $versionID;
 		
 		$sql = 'UPDATE '.static::getDatabaseVersionTableName().'
 		        SET    '.$updateSQL.'
-		        WHERE  '.$objectIDName.' = ?
-		        AND    '.$versionIDName.' = ?';
+		        WHERE  '.$versionIDName.' = ?';
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($statementParameters);
 	}
@@ -98,7 +93,7 @@ abstract class AbstractVersionableDatabaseObjectEditor extends DatabaseObjectEdi
 	 * @see \wcf\data\IVersionableDatabaseObjectEditor::deleteVersion()
 	 */
 	public function deleteVersion($versionID) {
-		static::deleteAllVersions(array($versionID));
+		static::deleteAllVersions($this->getObjectID(), array($versionID));
 	}
 	
 	/**
@@ -108,16 +103,16 @@ abstract class AbstractVersionableDatabaseObjectEditor extends DatabaseObjectEdi
 	 * @param	array	$versionIDs	numerical array
 	 * @return	count of affected rows
 	 */
-	public static function deleteAllVersions($objectID, array $versionIDs) {
+	public static function deleteAllVersions($objectID, array $versionNumbers) {
 		$sql = 'DELETE FROM '.static::getDatabaseVersionTableName().'
 		        WHERE       '.static::getDatabaseTableIndexName().' = ?
-		        AND         '.static::getVersionIDName().' = ?';
+		        AND         versionNumber = ?';
 		$statement = WCF::getDB()->prepareStatement($sql);
 		
 		$affectedCount = 0;
 		WCF::getDB()->beginTransaction();
-		foreach ($versionIDs as $versionID) {
-			$statement->executeUnbuffered(array($objectID, $versionID));
+		foreach ($versionNumbers as $versionNumber) {
+			$statement->executeUnbuffered(array($objectID, $versionNumber));
 			$affectedCount += $statement->getAffectedRows();
 		}
 		WCF::getDB()->commitTransaction();

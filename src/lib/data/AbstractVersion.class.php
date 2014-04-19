@@ -14,12 +14,6 @@ use wcf\system\WCF;
  */
 abstract class AbstractVersion extends DatabaseObject implements IVersion {
 	/**
-	 * indicates if database table index is an identity column
-	 * @var	boolean
-	 */
-	protected static $databaseTableIndexIsIdentity = false;
-	
-	/**
 	 * The class name of the corresponding versionable object class (FQCN).
 	 * @var string
 	 */
@@ -28,17 +22,15 @@ abstract class AbstractVersion extends DatabaseObject implements IVersion {
 	/**
 	 * Creates a new instance of the Version class.
 	 *
-	 * @param	integer						$objectID
 	 * @param	integer						$versionID
 	 * @param	array						$row
 	 * @param	\wcf\data\AbstractVersion	$object
 	 */
-	public function __construct($objectID, $versionID, array $row = null, AbstractVersion $object = null) {
+	public function __construct($versionID, array $row = null, AbstractVersion $object = null) {
 		if ($id !== null) {
 			$sql = 'SELECT *
 			        FROM   '.static::getDatabaseTableName().'
-			        WHERE  '.static::getObjectDatabaseTableIndexName().' = ?
-			        AND    '.static::getDatabaseTableIndexName().' = ?';
+			        WHERE  '.static::getDatabaseTableIndexName().' = ?';
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array($objectID, $versionID));
 			$row = $statement->fetchArray();
@@ -57,8 +49,7 @@ abstract class AbstractVersion extends DatabaseObject implements IVersion {
 	 * @see \wcf\data\IVersion::getVersionNumber()
 	 */
 	public function getVersionNumber() {
-		$versionIDName = call_user_func(static::$versionableObjectClass, 'getVersionIDName');
-		return $this->$versionIDName;
+		return $this->versionNumber;
 	}
 	
 	/**

@@ -51,12 +51,11 @@ abstract class AbstractVersionableDatabaseObject extends DatabaseObject implemen
 	 */
 	public function getVersions() {
 		$objectIDName = static::getDatabaseTableIndexName();
-		$versionIDName = static::getVersionIDName();
 		
 		$sql = 'SELECT *
 		        FROM     '.static::getDatabaseVersionTableName().'
 		        WHERE    '.$objectIDName.' = ?
-		        ORDER BY '.$versionIDName.' DESC';
+		        ORDER BY versionNumber DESC';
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->$objectIDName));
 		

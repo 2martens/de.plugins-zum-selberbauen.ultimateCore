@@ -15,7 +15,8 @@ interface IVersion extends IStorableObject {
 	/**
 	 * Returns the number of this version.
 	 * 
-	 * The number of the version is it's ID. It is unique in combination with the object ID.
+	 * The number of the version is unique in combination with the object ID.
+	 * Don't mistake with the versionID.
 	 * 
 	 * @api
 	 * @return	integer
