@@ -128,6 +128,13 @@ abstract class AbstractLanguageEntryCache extends SingletonFactory {
 		return $value;
 	}
 	
+	/**
+	 * Reloads the cache.
+	 */
+	public function reloadCache() {
+		static::getCacheBuilderObject()->reset();
+		$this->init();
+	}
 	
 	/**
 	 * Initializes the cache.

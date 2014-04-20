@@ -38,7 +38,13 @@ use wcf\system\WCF;
  * @subpackage	data
  * @category	Community Framework
  */
-abstract class AbstractLanguageEntryEditor extends DatabaseObjectEditor implements ILanguageEntryEditor {
+abstract class AbstractLanguageEntryEditor extends DatabaseObjectEditor implements ILanguageEntryEditor, IEditableCachedObject {
+	/**
+	 * Name of cache class (FQCN).
+	 * @var string
+	 */
+	protected static $cacheClass = '';
+	
 	/**
 	 * Creates entries for one object.
 	 * 
@@ -148,5 +154,21 @@ abstract class AbstractLanguageEntryEditor extends DatabaseObjectEditor implemen
 	 */
 	public static function getObjectIDName() {
 		return call_user_func(array(static::$baseClass, 'getObjectIDName'));
+	}
+	
+	/**
+	 * @see \wcf\data\IEditableCachedObject::resetCache()
+	 */
+	public static function resetCache() {
+		static::getCacheObject()->reloadCache();
+	}
+	
+	/**
+	 * Returns an object of the cache builder.
+	 *
+	 * @return	\wcf\data\AbstractLanguageEntryCache
+	 */
+	protected static function getCacheObject() {
+		return call_user_func(array(static::$cacheClass, 'getInstance'));
 	}
 }
