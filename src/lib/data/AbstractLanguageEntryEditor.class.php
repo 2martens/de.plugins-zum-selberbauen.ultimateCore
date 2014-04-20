@@ -55,6 +55,9 @@ abstract class AbstractLanguageEntryEditor extends DatabaseObjectEditor implemen
 			$statementParameters[$languageID] = array();
 			$languageIDs[] = $languageID;
 			foreach ($__data as $key => $value) {
+				if ($key == 'languageID' || $key == static::getObjectIDName()) {
+					continue;
+				}
 				if (!empty($keys[$languageID])) {
 					$keys[$languageID] .= ',';
 					$values[$languageID] .= ',';
@@ -64,6 +67,10 @@ abstract class AbstractLanguageEntryEditor extends DatabaseObjectEditor implemen
 				$values[$languageID] .= '?';
 				$statementParameters[$languageID][] = $value;
 			}
+			$keys[$languageID] .= ',languageID,'.static::getObjectIDName();
+			$values[$languageID] .= ',?,?';
+			$statementParameters[$languageID][] = ($languageID ? $languageID : null);
+			$statementParameters[$languageID][] = $objectID;
 		}
 		
 		// save entries
@@ -97,12 +104,15 @@ abstract class AbstractLanguageEntryEditor extends DatabaseObjectEditor implemen
 			$statementParameters[$languageID] = array();
 			$languageIDs[] = $languageID;
 			foreach ($__data as $key => $value) {
+				if ($key == 'languageID' || $key == static::getObjectIDName()) {
+					continue;
+				}
 				if (!empty($updateSQL[$languageID])) $updateSQL[$languageID] .= ', ';
 				$updateSQL[$languageID] .= $key . ' = ?';
 				$statementParameters[$languageID][] = $value;
 			}
 			$statementParameters[$languageID][] = $objectID;
-			$statementParameters[$languageID][] = $languageID;
+			$statementParameters[$languageID][] = ($languageID ? $languageID : null);
 		}
 		
 		WCF::getDB()->beginTransaction();

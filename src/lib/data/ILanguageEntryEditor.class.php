@@ -30,6 +30,8 @@ namespace wcf\data;
 /**
  * Interface for language entry editors.
  * 
+ * A neutral entry (or default entry) is represented by the languageID 0.
+ * 
  * @author		Jim Martens
  * @copyright	2012-2014 Jim Martens
  * @license		http://www.gnu.org/licenses/lgpl-3.0 GNU Lesser General Public License, version 3
