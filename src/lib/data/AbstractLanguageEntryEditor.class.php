@@ -102,6 +102,7 @@ abstract class AbstractLanguageEntryEditor extends DatabaseObjectEditor implemen
 	 * @param	array	$data	associative array (languageID => (key => value))
 	 */
 	public static function updateEntries($objectID, array $data) {
+		// TODO use delete, insert mechanism (delete old, insert new)
 		$updateSQL = array();
 		$statementParameters = array();
 		$languageIDs = array();
