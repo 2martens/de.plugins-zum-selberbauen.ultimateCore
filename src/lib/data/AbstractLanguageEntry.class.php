@@ -81,7 +81,7 @@ abstract class AbstractLanguageEntry extends DatabaseObject implements ILanguage
 			        WHERE  '.static::$objectIDName.' = ?
 			        AND    languageID                = ?';
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($objectID, $languageID));
+			$statement->execute(array($objectID, ($languageID ? $languageID : null)));
 			$row = $statement->fetchArray();
 			
 			// enforce data type 'array'

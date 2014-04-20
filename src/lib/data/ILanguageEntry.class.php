@@ -41,9 +41,9 @@ namespace wcf\data;
  */
 interface ILanguageEntry extends IStorableObject {
 	/**
-	 * Returns the language of the entry.
+	 * Returns the language of the entry or null if is language-independent.
 	 * 
-	 * @return	\wcf\data\language\Language
+	 * @return	\wcf\data\language\Language|null
 	 */
 	public function getLanguage();
 }

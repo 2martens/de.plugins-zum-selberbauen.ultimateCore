@@ -69,7 +69,7 @@ abstract class AbstractLanguageEntryCacheBuilder extends AbstractCacheBuilder {
 			if (!isset($data['languageEntryIDsToObjectID'][$row[static::getObjectIDName()]])) {
 				$data['languageEntryIDsToObjectID'][$row[static::getObjectIDName()]] = array();
 			}
-			$data['languageEntryIDsToObjectID'][$row[static::getObjectIDName()]][$row['languageID']] = $row['languageEntryID'];
+			$data['languageEntryIDsToObjectID'][$row[static::getObjectIDName()]][($row['languageID'] !== null ? $row['languageID'] : 0)] = $row['languageEntryID'];
 		}
 		
 		$data['languageEntries'] = $this->buildLanguageEntries();
