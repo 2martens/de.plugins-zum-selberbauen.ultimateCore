@@ -71,10 +71,10 @@ abstract class AbstractLanguageEntryCache extends SingletonFactory {
 	 * @param	string	$key
 	 * @return	mixed|null	null if there is no such value
 	 */
-	public function get($objectID, $key) {
-		// the actual language entries are cached with all or part of their values
+	public function getValue($objectID, $key) {
 		$value = null;
 		$languageID = 0;
+		// the actual language entries are cached with all or part of their values
 		if (isset($this->cachedData['languageEntries'][$objectID])) {
 			$entries = $this->cachedData['languageEntries'][$objectID];
 			$entry = null;
@@ -126,6 +126,94 @@ abstract class AbstractLanguageEntryCache extends SingletonFactory {
 		}
 		
 		return $value;
+	}
+	
+	/**
+	 * Returns an array with all values for given object and key.
+	 * 
+	 * If a key has only a neutral value, all returned values will be the same. 
+	 * 
+	 * @param	integer	$objectID
+	 * @param	string	$key
+	 */
+	public function getValues($objectID, $key) {
+		$values = array();
+		$languageIDs = array_keys(WCF::getLanguage()->getLanguages());
+		if (isset($this->cachedData['languageEntries'][$objectID])) {
+			$entries = $this->cachedData['languageEntries'][$objectID];
+			
+			foreach ($languageIDs as $languageID) {
+				if (isset($entries[$languageID])) {
+					// try to retrieve a cached value
+					$values[$languageID] = $entries[$languageID]->__get($key);
+				}
+				else if (isset($entries[static::NEUTRAL_LANGUAGE])) {
+					$values[$languageID] = $entries[static::NEUTRAL_LANGUAGE];
+				}
+				else {
+					$values[$languageID] = null;
+				}
+			}
+		}
+		
+		$entryIDs = $this->cachedData['languageEntryIDsToObjectID'][$objectID];
+		foreach ($values as $languageID => &$value) {
+			if ($value !== null) continue;
+			$entryID = 0;
+			// cached value didn't exist
+			
+			// there is an entryID for the active language
+			if (isset($entryIDs[$languageID])) {
+				$entryID = $entryIDs[$languageID];
+			}
+			// there is an entryID for all languages/a fallback for not covered languages
+			else if ($entryIDs[static::NEUTRAL_LANGUAGE]) {
+				$entryID = $entryIDs[static::NEUTRAL_LANGUAGE];
+			}
+			
+			// there is an entryID
+			if ($entryID) {
+				/* @var $entry \wcf\data\ILanguageEntry|null */
+				// load the fitting entry from database
+				$entry = new static::$languageEntryClass($entryID);
+				// save the retrieved entry in the cached data
+				if (!isset($this->cachedData['languageEntries'][$objectID])) {
+					$this->cachedData['languageEntries'][$objectID] = array();
+				}
+				$this->cachedData['languageEntries'][$objectID][$languageID] = $entry;
+				// try to retrieve value
+				$value = $entry->__get($key);
+			}
+		}
+		
+		return $values;
+	}
+	
+	/**
+	 * Returns true, if there is only a neutral value for the given object and key.
+	 * 
+	 * @param	integer	$objectID
+	 * @param	string	$key
+	 */
+	public function isNeutralValue($objectID, $key) {
+		$languageIDs = array_keys(WCF::getLanguage()->getLanguages());
+		$entryIDs = $this->cachedData['languageEntryIDsToObjectID'][$objectID];
+		
+		$isNeutralValue = (isset($entryIDs[static::NEUTRAL_LANGUAGE]));
+		
+		if ($isNeutralValue) {
+			unset($entryIDs[static::NEUTRAL_LANGUAGE]);
+			$intersection = 0;
+			foreach ($entryIDs as $languageID => $entryID) {
+				if (in_array($languageID, $languageIDs)) {
+					$intersection++;
+				}
+			}
+			
+			$isNeutralValue = ($intersection == 0);
+		}
+		
+		return $isNeutralValue;
 	}
 	
 	/**
