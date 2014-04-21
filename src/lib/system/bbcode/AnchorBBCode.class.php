@@ -19,7 +19,7 @@
  * along with the Ultimate Core. If not, see {@link http://www.gnu.org/licenses/}.
  * 
  * @author		Jim Martens
- * @copyright	2011-2012 Jim Martens
+ * @copyright	2011-2014 Jim Martens
  * @license		http://www.gnu.org/licenses/lgpl-3.0 GNU Lesser General Public License, version 3
  * @package		de.plugins-zum-selberbauen.ultimateCore
  * @subpackage	system.bbcode
@@ -37,7 +37,7 @@ use wcf\util\StringUtil;
  * [anchor=id,type]text[/anchor] -> Creates a <code>type</code> element with id as the id of it and text as content. Allowed types are a, h1, h2, h3, h4, h5 and h6.
  * 
  * @author		Jim Martens
- * @copyright	2013 Jim Martens
+ * @copyright	2011-2014 Jim Martens
  * @license		http://www.gnu.org/licenses/lgpl-3.0 GNU Lesser General Public License, version 3
  * @package		de.plugins-zum-selberbauen.ultimateCore
  * @subpackage	system.bbcode
