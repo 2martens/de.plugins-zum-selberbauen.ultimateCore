@@ -98,40 +98,44 @@ abstract class AbstractLanguageEntryEditor extends DatabaseObjectEditor implemen
 	/**
 	 * Updates entries for one object.
 	 * 
+	 * Convenience method to delete existing entries and create new entries.
+	 * 
 	 * @param	integer	$objectID
 	 * @param	array	$data	associative array (languageID => (key => value))
 	 */
 	public static function updateEntries($objectID, array $data) {
-		// TODO use delete, insert mechanism (delete old, insert new)
-		$updateSQL = array();
-		$statementParameters = array();
-		$languageIDs = array();
-		foreach ($data as $languageID => $__data) {
-			$updateSQL[$languageID] = '';
-			$statementParameters[$languageID] = array();
-			$languageIDs[] = $languageID;
-			foreach ($__data as $key => $value) {
-				if ($key == 'languageID' || $key == static::getObjectIDName()) {
-					continue;
-				}
-				if (!empty($updateSQL[$languageID])) $updateSQL[$languageID] .= ', ';
-				$updateSQL[$languageID] .= $key . ' = ?';
-				$statementParameters[$languageID][] = $value;
-			}
-			$statementParameters[$languageID][] = $objectID;
-			$statementParameters[$languageID][] = ($languageID ? $languageID : null);
-		}
+		static::deleteEntries($objectID);
+		static::createEntries($objectID, $data);
+		// use delete, insert mechanism instead
+// 		$updateSQL = array();
+// 		$statementParameters = array();
+// 		$languageIDs = array();
+// 		foreach ($data as $languageID => $__data) {
+// 			$updateSQL[$languageID] = '';
+// 			$statementParameters[$languageID] = array();
+// 			$languageIDs[] = $languageID;
+// 			foreach ($__data as $key => $value) {
+// 				if ($key == 'languageID' || $key == static::getObjectIDName()) {
+// 					continue;
+// 				}
+// 				if (!empty($updateSQL[$languageID])) $updateSQL[$languageID] .= ', ';
+// 				$updateSQL[$languageID] .= $key . ' = ?';
+// 				$statementParameters[$languageID][] = $value;
+// 			}
+// 			$statementParameters[$languageID][] = $objectID;
+// 			$statementParameters[$languageID][] = ($languageID ? $languageID : null);
+// 		}
 		
-		WCF::getDB()->beginTransaction();
-		foreach ($languageIDs as $languageID) {
-			$sql = 'UPDATE '.static::getDatabaseTableName().'
-			        SET    '.$updateSQL.'
-			        WHERE  '.static::getObjectIDName().' = ?
-			        AND    languageID                    = ?';
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->executeUnbuffered($statementParameters);
-		}
-		WCF::getDB()->commitTransaction();
+// 		WCF::getDB()->beginTransaction();
+// 		foreach ($languageIDs as $languageID) {
+// 			$sql = 'UPDATE '.static::getDatabaseTableName().'
+// 			        SET    '.$updateSQL.'
+// 			        WHERE  '.static::getObjectIDName().' = ?
+// 			        AND    languageID                    = ?';
+// 			$statement = WCF::getDB()->prepareStatement($sql);
+// 			$statement->executeUnbuffered($statementParameters);
+// 		}
+// 		WCF::getDB()->commitTransaction();
 	}
 	
 	/**
