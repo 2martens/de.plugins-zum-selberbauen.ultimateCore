@@ -49,6 +49,12 @@ abstract class AbstractVersionableDatabaseObject extends DatabaseObject implemen
 	protected static $versionClassName = '';
 	
 	/**
+	 * Name of the version cache class (FQCN).
+	 * @var string
+	 */
+	protected static $versionCacheClass = '';
+	
+	/**
 	 * The current version.
 	 * @var	\wcf\data\IVersion
 	 */
@@ -59,14 +65,7 @@ abstract class AbstractVersionableDatabaseObject extends DatabaseObject implemen
 	 */
 	public function getCurrentVersion() {
 		if ($this->currentVersion === null) {
-			$versions = $this->getVersions();
-			foreach ($versions as $version) {
-				/* @var $version \wcf\data\IVersion */
-				if (!$version->isReleased()) continue;
-				
-				$this->currentVersion = $version;
-				break;
-			}
+			$this->currentVersion = static::getCacheObject()->getCurrentVersion($this->getObjectID());
 		}
 		
 		return $this->currentVersion;
@@ -76,21 +75,7 @@ abstract class AbstractVersionableDatabaseObject extends DatabaseObject implemen
 	 * @see \wcf\data\IVersionableDatabaseObject::getVersions()
 	 */
 	public function getVersions() {
-		$objectIDName = static::getDatabaseTableIndexName();
-		
-		$sql = 'SELECT *
-		        FROM     '.static::getDatabaseVersionTableName().'
-		        WHERE    '.$objectIDName.' = ?
-		        ORDER BY versionNumber DESC';
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->$objectIDName));
-		
-		$versions = array();
-		while ($version = $statement->fetchObject($versionClassName)) {
-			$versions[$version->getObjectID()] = $version;
-		}
-		
-		return $versions;
+		return static::getCacheObject()->getVersions($this->getObjectID());
 	}
 	
 	/**
@@ -146,5 +131,14 @@ abstract class AbstractVersionableDatabaseObject extends DatabaseObject implemen
 	 */
 	public static function getVersionClassName() {
 		return static::$versionClassName;
+	}
+	
+	/**
+	 * Returns an object of the cache class.
+	 * 
+	 * @return \wcf\data\AbstractVersionCache
+	 */
+	public static function getCacheObject() {
+		return call_user_func(array(static::$versionCacheClass, 'getInstance'));
 	}
 }
