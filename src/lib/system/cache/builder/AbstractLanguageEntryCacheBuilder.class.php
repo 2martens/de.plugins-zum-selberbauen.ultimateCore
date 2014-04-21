@@ -101,6 +101,6 @@ abstract class AbstractLanguageEntryCacheBuilder extends AbstractCacheBuilder {
 	 * @return string
 	 */
 	protected static function getDatabaseTableName() {
-		return call_user_func(array(static::$languageEntryClass, 'getDatabseTableName'));
+		return call_user_func(array(static::$languageEntryClass, 'getDatabaseTableName'));
 	}
 }
