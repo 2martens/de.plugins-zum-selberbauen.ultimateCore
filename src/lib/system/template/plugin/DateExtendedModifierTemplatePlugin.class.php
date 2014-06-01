@@ -37,6 +37,6 @@ class DateExtendedModifierTemplatePlugin extends DateModifierTemplatePlugin {
 		);
 		$time = DateUtil::format($dateTimeObject, DateUtil::TIME_FORMAT);
 		$formattedDate = parent::execute($tagArgs, $tplObj);
-		return '<time datetime="'.DateUtil::format($dateTimeObject, 'c').'" class="datetime" data-timestamp="'.$timestamp.'" data-date="'.$date.'" data-time="'.$time.'" data-offset="'.$dateTimeObject->getOffset().'">'.$formattedDate.'</time>';
+		return '<time datetime="'.DateUtil::format($dateTimeObject, 'c').'" class="datetime" data-timestamp="'.$timestamp.'" data-date="'.$date.'" data-time="'.$time.'" data-offset="'.$dateTimeObject->getOffset().'"'.($timestamp > TIME_NOW ? ' data-is-future-date="true"' : '').'>'.$formattedDate.'</time>';
 	}
 }
