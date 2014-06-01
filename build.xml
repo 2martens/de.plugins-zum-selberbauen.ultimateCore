@@ -18,6 +18,15 @@
 				<exclude name="acp/templates/**" />
 			</tarfileset>
 		</tar>
+		
+		<!-- 1.0.1 update tars -->
+		<tar destfile="metadata/files_update.101.tar">
+			<tarfileset dir="src">
+				<exclude name="templates/**" />
+				<exclude name="acp/templates/**" />
+				<include name="lib/system/template/plugin/DateExtended*" />
+			</tarfileset>
+		</tar>
 	</target>
 	
 	<target name="build" depends="pack" description="Generates the package archive.">
