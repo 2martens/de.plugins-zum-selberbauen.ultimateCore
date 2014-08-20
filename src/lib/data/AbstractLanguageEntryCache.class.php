@@ -135,6 +135,7 @@ abstract class AbstractLanguageEntryCache extends SingletonFactory {
 	 * 
 	 * @param	integer	$objectID
 	 * @param	string	$key
+	 * @return   string[]
 	 */
 	public function getValues($objectID, $key) {
 		$values = array();
