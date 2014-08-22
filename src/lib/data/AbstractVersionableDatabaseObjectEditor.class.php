@@ -69,7 +69,7 @@ abstract class AbstractVersionableDatabaseObjectEditor extends DatabaseObjectEdi
 		$row = $statement->fetchArray();
 		$newVersionNumber = $row['versionNumber'] + 1;
 		
-		// include the new version ID in the keys and values
+		// include the new versionNumber in the keys and values
 		if (!empty($keys)) {
 			$keys .= ',';
 			$values .= ',';
@@ -86,8 +86,9 @@ abstract class AbstractVersionableDatabaseObjectEditor extends DatabaseObjectEdi
 		$statement->execute($statementParameters);
 		
 		$versionClassName = static::getVersionClassName();
+		$versionID = WCF::getDB()->getInsertID(static::getDatabaseVersionTableName(), 'versionID');
 		
-		return new $versionClassName($newVersionNumber);
+		return new $versionClassName($versionID);
 	}
 	
 	/**
