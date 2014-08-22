@@ -78,7 +78,6 @@ abstract class AbstractVersionableDatabaseObjectEditor extends DatabaseObjectEdi
 		$values .= '?';
 		$statementParameters[] = $newVersionNumber;
 		
-		
 		// actually insert data into database
 		$sql = 'INSERT INTO '.static::getDatabaseVersionTableName().'
 		                    ('.$keys.')
@@ -126,8 +125,8 @@ abstract class AbstractVersionableDatabaseObjectEditor extends DatabaseObjectEdi
 	 * Deletes all given versions of a given object.
 	 * 
 	 * @param	integer	$objectID
-	 * @param	array	$versionIDs	numerical array
-	 * @return	count of affected rows
+	 * @param	array	$versionNumbers	numerical array
+	 * @return	integer count of affected rows
 	 */
 	public static function deleteAllVersions($objectID, array $versionNumbers) {
 		$sql = 'DELETE FROM '.static::getDatabaseVersionTableName().'

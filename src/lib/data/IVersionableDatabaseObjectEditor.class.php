@@ -45,7 +45,7 @@ interface IVersionableDatabaseObjectEditor {
 	 * @param	array	$parameters	associative array
 	 * @return	\wcf\data\IVersion
 	 */
-	public function createVersion($parameters);
+	public function createVersion(array $parameters);
 	
 	/**
 	 * Updates the given version with the given data.
@@ -54,7 +54,7 @@ interface IVersionableDatabaseObjectEditor {
 	 * @param	integer	$versionID
 	 * @param	array	$parameters	associative array
 	 */
-	public function updateVersion($versionID, $parameters);
+	public function updateVersion($versionID, array $parameters);
 	
 	/**
 	 * Deletes the given version.
@@ -68,8 +68,8 @@ interface IVersionableDatabaseObjectEditor {
 	 * Deletes all given versions of a given object.
 	 * 
 	 * @param	integer	$objectID
-	 * @param	array	$versionIDs	numerical array
-	 * @return	count of affected rows
+	 * @param	array	$versionNumbers	numerical array
+	 * @return	integer count of affected rows
 	 */
-	public static function deleteAllVersions($objectID, array $versionIDs);
+	public static function deleteAllVersions($objectID, array $versionNumbers);
 }
