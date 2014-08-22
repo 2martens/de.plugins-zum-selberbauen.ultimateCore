@@ -98,6 +98,7 @@ abstract class AbstractVersionableDatabaseObject extends DatabaseObject implemen
 	 * @param	string	$name
 	 * @param	array	$arguments
 	 * @return	mixed
+	 * @throws  SystemException
 	 */
 	public function __call($name, $arguments) {
 		if (!method_exists($this->getCurrentVersion(), $name)) {
