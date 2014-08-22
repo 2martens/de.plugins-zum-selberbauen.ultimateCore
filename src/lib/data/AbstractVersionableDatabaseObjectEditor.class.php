@@ -61,7 +61,7 @@ abstract class AbstractVersionableDatabaseObjectEditor extends DatabaseObjectEdi
 		}
 		
 		// retrieve next version id for current object
-		$sql = 'SELECT MAX(versionNumber)
+		$sql = 'SELECT MAX(versionNumber) AS versionNumber
 		        FROM   '.static::getDatabaseVersionTableName().'
 		        WHERE  '.static::getDatabaseTableIndexName().' = ?';
 		$statement = WCF::getDB()->prepareStatement($sql);
