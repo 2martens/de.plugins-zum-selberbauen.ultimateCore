@@ -87,8 +87,9 @@ abstract class AbstractVersionableDatabaseObject extends DatabaseObject implemen
 	public function __get($name) {
 		$result = parent::__get($name);
 		if ($result === null) {
-			return $this->getCurrentVersion()->__get($name);
+			$result = $this->getCurrentVersion()->__get($name);
 		}
+		return $result;
 	}
 	
 	/**
