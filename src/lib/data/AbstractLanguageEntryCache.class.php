@@ -195,6 +195,7 @@ abstract class AbstractLanguageEntryCache extends SingletonFactory {
 	 * 
 	 * @param	integer	$objectID
 	 * @param	string	$key
+	 * @return  boolean
 	 */
 	public function isNeutralValue($objectID, $key) {
 		$languageIDs = array_keys(WCF::getLanguage()->getLanguages());
