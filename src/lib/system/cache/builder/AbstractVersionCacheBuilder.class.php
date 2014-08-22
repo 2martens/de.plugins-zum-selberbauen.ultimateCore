@@ -60,50 +60,41 @@ abstract class AbstractVersionCacheBuilder extends AbstractCacheBuilder {
 			'versionsToObjectID' => array()
 		);
 		
-		$sql = 'SELECT versionID, '.static::getObjectDatabaseTableIndexName().'
-		        FROM '.static::getDatabaseTableName();
-		$statement = WCF::getDB()->prepareStatement($sql);
+		$objectListClass = static::$versionClass.'List';
+		$objectList = new $objectListClass();
+		$objectList->sqlOrderBy = 'versionNumber DESC';
+		$objectList->readObjects();
+		$versions = $objectList->getObjects();
+		
+		if (empty($versions)) return $data;
 		
 		$objectIDs = array();
-		while ($row = $statement->fetchArray()) {
-			if (!isset($data['versionIDsToObjectID'][$row[static::getObjectDatabaseTableIndexName()]])) {
-				$data['versionIDsToObjectID'][$row[static::getObjectDatabaseTableIndexName()]] = array();
+		foreach ($versions as $versionID => $version) {
+			$objectID = $version->__get(static::getObjectDatabaseTableIndexName());
+			if (!isset($data['versionIDsToObjectID'][$objectID])) {
+				$data['versionIDsToObjectID'][$objectID] = array();
 			}
-			$data['versionIDsToObjectID'][$row[static::getObjectDatabaseTableIndexName()]][] = $row['versionID'];
-			// save object ids
-			if (!in_array($row[static::getObjectDatabaseTableIndexName()], $objectIDs)) {
-				$objectIDs[] = $row[static::getObjectDatabaseTableIndexName()];
+			$data['versionIDsToObjectID'][$objectID][] = $versionID;
+			
+			if (!in_array($objectID, $objectIDs)) {
+				$objectIDs[] = $objectID;
 			}
+
+			if ($version->isReleased() && !isset($data['currentVersionIDToObjectID'][$objectID])) {
+				$data['currentVersionIDToObjectID'][$objectID] = $version->__get('versionID');
+			}
+
+			if (!isset($data['versionsToObjectID'][$objectID])) {
+				$data['versionsToObjectID'][$objectID] = array();
+			}
+			$data['versionsToObjectID'][$objectID][$version->__get('versionID')] = $version;
 		}
 		
-		$sql = 'SELECT *
-		        FROM   '.static::getDatabaseTableName().'
-		        WHERE  '.static::getObjectDatabaseTableIndexName().' = ?
-		        ORDER BY versionNumber DESC';
-		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($objectIDs as $objectID) {
-			$statement->execute(array($objectID));
-			
-			$versions = array();
-			while ($version = $statement->fetchObject(static::$versionClass)) {
-				$versions[] = $version;
-				if ($version->isReleased() 
-					&& !isset($data['currentVersionIDToObjectID'][$version->__get(static::getObjectDatabaseTableIndexName())])) {
-					$data['currentVersionIDToObjectID'][$version->__get(static::getObjectDatabaseTableIndexName())] = $version->__get('versionID');
-				}
-			}
-			
-			// if no version is released yet, the oldest version is the current version
-			if (!isset($data['currentVersionIDToObjectID'][$version->__get(static::getObjectDatabaseTableIndexName())])) {
-				$data['currentVersionIDToObjectID'][$version->__get(static::getObjectDatabaseTableIndexName())] = $tmprslt = array_pop($versions);
-				$versions[] = $tmprslt;
-			}
-			
-			foreach ($versions as $version) {
-				if (!isset($data['versionsToObjectID'][$version->__get(static::getObjectDatabaseTableIndexName())])) {
-					$data['versionsToObjectID'][$version->__get(static::getObjectDatabaseTableIndexName())] = array();
-				}
-				$data['versionsToObjectID'][$version->__get(static::getObjectDatabaseTableIndexName())][$version->__get('versionID')] = $version;
+			$versionIDs = array_reverse($data['versionIDsToObjectID'][$objectID]);
+			$oldestVersionID = $versionIDs[0];
+			if (!isset($data['currentVersionIDToObjectID'][$objectID])) {
+				$data['currentVersionIDToObjectID'][$objectID] = $oldestVersionID;
 			}
 		}
 		
