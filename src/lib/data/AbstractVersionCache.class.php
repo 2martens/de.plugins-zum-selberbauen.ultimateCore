@@ -55,7 +55,7 @@ abstract class AbstractVersionCache extends SingletonFactory {
 	 * Returns the id of the current version for the given object.
 	 *  
 	 * @param	integer	$objectID
-	 * @return	\wcf\data\IVersion
+	 * @return	integer
 	 */
 	public function getCurrentVersionID($objectID) {
 		return $this->cachedData['currentVersionIDToObjectID'][$objectID];
