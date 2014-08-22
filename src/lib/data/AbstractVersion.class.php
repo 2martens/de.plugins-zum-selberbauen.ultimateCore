@@ -53,12 +53,12 @@ abstract class AbstractVersion extends DatabaseObject implements IVersion {
 	 * @param	\wcf\data\AbstractVersion	$object
 	 */
 	public function __construct($versionID, array $row = null, AbstractVersion $object = null) {
-		if ($id !== null) {
+		if ($versionID !== null) {
 			$sql = 'SELECT *
 			        FROM   '.static::getDatabaseTableName().'
 			        WHERE  '.static::getDatabaseTableIndexName().' = ?';
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($objectID, $versionID));
+			$statement->execute(array($versionID));
 			$row = $statement->fetchArray();
 			
 			// enforce data type 'array'
