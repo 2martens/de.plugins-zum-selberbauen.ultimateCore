@@ -141,11 +141,11 @@ abstract class AbstractLanguageEntryEditor extends DatabaseObjectEditor implemen
 		WCF::getDB()->beginTransaction();
 		foreach ($languageIDs as $languageID) {
 			$sql = 'UPDATE '.static::getDatabaseTableName().'
-			        SET    '.$updateSQL.'
+			        SET    '.$updateSQL[$languageID].'
 			        WHERE  '.static::getObjectIDName().' = ?
 			        AND    languageID                    = ?';
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->executeUnbuffered($statementParameters);
+			$statement->executeUnbuffered($statementParameters[$languageID]);
 		}
 		WCF::getDB()->commitTransaction();
 	}
