@@ -149,7 +149,7 @@ abstract class AbstractLanguageEntryCache extends SingletonFactory {
 					$values[$languageID] = $entries[$languageID]->__get($key);
 				}
 				else if (isset($entries[static::NEUTRAL_LANGUAGE])) {
-					$values[$languageID] = $entries[static::NEUTRAL_LANGUAGE];
+					$values[$languageID] = $entries[static::NEUTRAL_LANGUAGE]->__get($key);
 				}
 				else {
 					$values[$languageID] = null;
