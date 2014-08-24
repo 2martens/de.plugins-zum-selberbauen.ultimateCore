@@ -77,23 +77,17 @@ abstract class AbstractLanguageEntryCache extends SingletonFactory {
 		// the actual language entries are cached with all or part of their values
 		if (isset($this->cachedData['languageEntries'][$objectID])) {
 			$entries = $this->cachedData['languageEntries'][$objectID];
-			$entry = null;
 			// there is an entry for the active language
 			$activeLanguageID = WCF::getLanguage()->getObjectID();
 			if (isset($entries[$activeLanguageID])) {
 				$entry = $entries[$activeLanguageID];
 				$languageID = $activeLanguageID;
+				$value = $entry->__get($key);
 			}
 			// there is an entry for all languages/a fallback for not covered languages
-			else if ($entries[static::NEUTRAL_LANGUAGE]) {
+			if ($value === null && isset($entries[static::NEUTRAL_LANGUAGE])) {
 				$entry = $entries[static::NEUTRAL_LANGUAGE];
 				$languageID = static::NEUTRAL_LANGUAGE;
-			}
-			
-			/* @var $entry \wcf\data\ILanguageEntry|null */
-			// there is an entry
-			if ($entry !== null) {
-				// try to retrieve a cached value
 				$value = $entry->__get($key);
 			}
 		}
@@ -104,10 +98,12 @@ abstract class AbstractLanguageEntryCache extends SingletonFactory {
 			// there is an entryID for the active language
 			if (isset($entryIDs[WCF::getLanguage()->getObjectID()])) {
 				$entryID = $entryIDs[WCF::getLanguage()->getObjectID()];
+				$languageID = WCF::getLanguage()->getObjectID();
 			}
 			// there is an entryID for all languages/a fallback for not covered languages
-			else if ($entryIDs[static::NEUTRAL_LANGUAGE]) {
+			else if (isset($entryIDs[static::NEUTRAL_LANGUAGE])) {
 				$entryID = $entryIDs[static::NEUTRAL_LANGUAGE];
+				$languageID = static::NEUTRAL_LANGUAGE;
 			}
 			
 			// there is an entryID
@@ -148,7 +144,7 @@ abstract class AbstractLanguageEntryCache extends SingletonFactory {
 					// try to retrieve a cached value
 					$values[$languageID] = $entries[$languageID]->__get($key);
 				}
-				else if (isset($entries[static::NEUTRAL_LANGUAGE])) {
+				if ($values[$languageID] === null && isset($entries[static::NEUTRAL_LANGUAGE])) {
 					$values[$languageID] = $entries[static::NEUTRAL_LANGUAGE]->__get($key);
 				}
 				else {
@@ -168,7 +164,7 @@ abstract class AbstractLanguageEntryCache extends SingletonFactory {
 				$entryID = $entryIDs[$languageID];
 			}
 			// there is an entryID for all languages/a fallback for not covered languages
-			else if ($entryIDs[static::NEUTRAL_LANGUAGE]) {
+			else if (isset($entryIDs[static::NEUTRAL_LANGUAGE])) {
 				$entryID = $entryIDs[static::NEUTRAL_LANGUAGE];
 			}
 			
@@ -198,21 +194,12 @@ abstract class AbstractLanguageEntryCache extends SingletonFactory {
 	 * @return  boolean
 	 */
 	public function isNeutralValue($objectID, $key) {
-		$languageIDs = array_keys(WCF::getLanguage()->getLanguages());
-		$entryIDs = $this->cachedData['languageEntryIDsToObjectID'][$objectID];
+		$entries = $this->cachedData['languageEntries'][$objectID];
 		
-		$isNeutralValue = (isset($entryIDs[static::NEUTRAL_LANGUAGE]));
+		$isNeutralValue = (isset($entries[static::NEUTRAL_LANGUAGE]));
 		
 		if ($isNeutralValue) {
-			unset($entryIDs[static::NEUTRAL_LANGUAGE]);
-			$intersection = 0;
-			foreach ($entryIDs as $languageID => $entryID) {
-				if (in_array($languageID, $languageIDs)) {
-					$intersection++;
-				}
-			}
-			
-			$isNeutralValue = ($intersection == 0);
+			$isNeutralValue = ($entries[static::NEUTRAL_LANGUAGE]->__get($key) !== null);
 		}
 		
 		return $isNeutralValue;

@@ -94,60 +94,18 @@ abstract class AbstractLanguageEntryEditor extends DatabaseObjectEditor implemen
 		
 		return $entryIDs;
 	}
-	
+
 	/**
 	 * Updates entries for one object.
-	 * 
+	 *
 	 * Convenience method to delete existing entries and create new entries.
-	 * 
+	 *
 	 * @param	integer	$objectID
 	 * @param	array	$data	associative array (languageID => (key => value))
 	 */
 	public static function updateEntries($objectID, array $data) {
-		// for the time being behave similar to I18n solution
-		// either there is a neutral entry or there are entries for languages
-		// TODO change this together with a custom frontend solution
-		if (isset($data[AbstractLanguageEntryCache::NEUTRAL_LANGUAGE])) {
-			static::deleteEntries($objectID);
-			$languageIDs = array_keys(WCF::getLanguage()->getLanguages());
-			foreach ($languageIDs as $languageID) {
-				if (isset($data[$languageID])) {
-					unset($data[$languageID]);
-				}
-			}
-			static::createEntries($objectID, $data);
-			return;
-		}
-		
-		$updateSQL = array();
-		$statementParameters = array();
-		$languageIDs = array();
-		foreach ($data as $languageID => $__data) {
-			$updateSQL[$languageID] = '';
-			$statementParameters[$languageID] = array();
-			$languageIDs[] = $languageID;
-			foreach ($__data as $key => $value) {
-				if ($key == 'languageID' || $key == static::getObjectIDName()) {
-					continue;
-				}
-				if (!empty($updateSQL[$languageID])) $updateSQL[$languageID] .= ', ';
-				$updateSQL[$languageID] .= $key . ' = ?';
-				$statementParameters[$languageID][] = $value;
-			}
-			$statementParameters[$languageID][] = $objectID;
-			$statementParameters[$languageID][] = ($languageID ? $languageID : null);
-		}
-		
-		WCF::getDB()->beginTransaction();
-		foreach ($languageIDs as $languageID) {
-			$sql = 'UPDATE '.static::getDatabaseTableName().'
-			        SET    '.$updateSQL[$languageID].'
-			        WHERE  '.static::getObjectIDName().' = ?
-			        AND    languageID                    = ?';
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->executeUnbuffered($statementParameters[$languageID]);
-		}
-		WCF::getDB()->commitTransaction();
+		static::deleteEntries($objectID);
+		static::createEntries($objectID, $data);
 	}
 	
 	/**
