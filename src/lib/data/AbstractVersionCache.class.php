@@ -98,7 +98,7 @@ abstract class AbstractVersionCache extends SingletonFactory {
 	 */
 	public function reloadCache() {
 		static::getCacheBuilderObject()->reset();
-		$this->init();
+		$this->reload();
 	}
 	
 	/**
@@ -106,6 +106,16 @@ abstract class AbstractVersionCache extends SingletonFactory {
 	 */
 	protected function init() {
 		$this->cachedData = static::getCacheBuilderObject()->getData();
+	}
+
+	/**
+	 * Overwrites the version cache.
+	 * 
+	 * It is used when the cache is reset during one request and the same
+	 * request requires access to updated version data.
+	 */
+	protected function reload() {
+		$this->cachedData = static::getCacheBuilderObject()->getCachedData();
 	}
 	
 	/**

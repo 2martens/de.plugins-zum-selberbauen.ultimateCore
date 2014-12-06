@@ -54,51 +54,7 @@ abstract class AbstractVersionCacheBuilder extends AbstractCacheBuilder {
 	 * @see \wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
 	protected final function rebuild(array $parameters) {
-		$data = array(
-			'currentVersionIDToObjectID' => array(),
-			'versionIDsToObjectID' => array(),
-			'versionsToObjectID' => array()
-		);
-		
-		$objectListClass = static::$versionClass.'List';
-		$objectList = new $objectListClass();
-		$objectList->sqlOrderBy = 'versionNumber DESC';
-		$objectList->readObjects();
-		$versions = $objectList->getObjects();
-		
-		if (empty($versions)) return $data;
-		
-		$objectIDs = array();
-		foreach ($versions as $versionID => $version) {
-			$objectID = $version->__get(static::getObjectDatabaseTableIndexName());
-			if (!isset($data['versionIDsToObjectID'][$objectID])) {
-				$data['versionIDsToObjectID'][$objectID] = array();
-			}
-			$data['versionIDsToObjectID'][$objectID][] = $versionID;
-			
-			if (!in_array($objectID, $objectIDs)) {
-				$objectIDs[] = $objectID;
-			}
-
-			if ($version->isReleased() && !isset($data['currentVersionIDToObjectID'][$objectID])) {
-				$data['currentVersionIDToObjectID'][$objectID] = $version->__get('versionID');
-			}
-
-			if (!isset($data['versionsToObjectID'][$objectID])) {
-				$data['versionsToObjectID'][$objectID] = array();
-			}
-			$data['versionsToObjectID'][$objectID][$version->__get('versionID')] = $version;
-		}
-		
-		foreach ($objectIDs as $objectID) {
-			$versionIDs = array_reverse($data['versionIDsToObjectID'][$objectID]);
-			$oldestVersionID = $versionIDs[0];
-			if (!isset($data['currentVersionIDToObjectID'][$objectID])) {
-				$data['currentVersionIDToObjectID'][$objectID] = $oldestVersionID;
-			}
-		}
-		
-		return $data;
+		return $this->getCachedData();
 	}
 	
 	/**
@@ -117,5 +73,58 @@ abstract class AbstractVersionCacheBuilder extends AbstractCacheBuilder {
 	 */
 	protected static function getDatabaseTableName() {
 		return call_user_func(array(static::$versionClass, 'getDatabaseTableName'));
+	}
+
+	/**
+	 * Returns the data read from database.
+	 * 
+	 * @return array
+	 */
+	public function getCachedData() {
+		$data = array(
+			'currentVersionIDToObjectID' => array(),
+			'versionIDsToObjectID' => array(),
+			'versionsToObjectID' => array()
+		);
+
+		$objectListClass = static::$versionClass.'List';
+		$objectList = new $objectListClass();
+		$objectList->sqlOrderBy = 'versionNumber DESC';
+		$objectList->readObjects();
+		$versions = $objectList->getObjects();
+
+		if (empty($versions)) return $data;
+
+		$objectIDs = array();
+		foreach ($versions as $versionID => $version) {
+			$objectID = $version->__get(static::getObjectDatabaseTableIndexName());
+			if (!isset($data['versionIDsToObjectID'][$objectID])) {
+				$data['versionIDsToObjectID'][$objectID] = array();
+			}
+			$data['versionIDsToObjectID'][$objectID][] = $versionID;
+
+			if (!in_array($objectID, $objectIDs)) {
+				$objectIDs[] = $objectID;
+			}
+
+			if ($version->isReleased() && !isset($data['currentVersionIDToObjectID'][$objectID])) {
+				$data['currentVersionIDToObjectID'][$objectID] = $version->__get('versionID');
+			}
+
+			if (!isset($data['versionsToObjectID'][$objectID])) {
+				$data['versionsToObjectID'][$objectID] = array();
+			}
+			$data['versionsToObjectID'][$objectID][$version->__get('versionID')] = $version;
+		}
+
+		foreach ($objectIDs as $objectID) {
+			$versionIDs = array_reverse($data['versionIDsToObjectID'][$objectID]);
+			$oldestVersionID = $versionIDs[0];
+			if (!isset($data['currentVersionIDToObjectID'][$objectID])) {
+				$data['currentVersionIDToObjectID'][$objectID] = $oldestVersionID;
+			}
+		}
+		
+		return $data;
 	}
 }
