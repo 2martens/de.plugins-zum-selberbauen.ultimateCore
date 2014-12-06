@@ -144,7 +144,7 @@ abstract class AbstractLanguageEntryCache extends SingletonFactory {
 					// try to retrieve a cached value
 					$values[$languageID] = $entries[$languageID]->__get($key);
 				}
-				if ($values[$languageID] === null && isset($entries[static::NEUTRAL_LANGUAGE])) {
+				if (!isset($values[$languageID]) && isset($entries[static::NEUTRAL_LANGUAGE])) {
 					$values[$languageID] = $entries[static::NEUTRAL_LANGUAGE]->__get($key);
 				}
 				else {
