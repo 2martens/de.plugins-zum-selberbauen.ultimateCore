@@ -1,7 +1,7 @@
 <?php
 /**
- * Contains the UserCacheBuilder class.
- *
+ * Contains interface IVersionableDatabaseObjectAction.
+ * 
  * LICENSE:
  * This file is part of the Ultimate Core.
  *
@@ -9,59 +9,52 @@
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * The Ultimate Core is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU Lesser General Public License
- * along with the Ultimate Core.  If not, see {@link http://www.gnu.org/licenses/}.
- *
+ * along with the Ultimate Core. If not, see {@link http://www.gnu.org/licenses/}}.
+ * 
  * @author		Jim Martens
  * @copyright	2011-2014 Jim Martens
  * @license		http://www.gnu.org/licenses/lgpl-3.0 GNU Lesser General Public License, version 3
  * @package		de.plugins-zum-selberbauen.ultimateCore
- * @subpackage	system.cache.builder
+ * @subpackage	data
  * @category	Community Framework
  */
-namespace wcf\system\cache\builder;
-use wcf\data\user\UserList;
+namespace wcf\data;
 
 /**
- * Caches the users.
- *
- * Provides two variables:
- * * \wcf\data\user\User[] users
- * * integer[] userIDs
- *
+ * Interface for versionable database object action classes.
+ * 
  * @author		Jim Martens
  * @copyright	2011-2014 Jim Martens
  * @license		http://www.gnu.org/licenses/lgpl-3.0 GNU Lesser General Public License, version 3
  * @package		de.plugins-zum-selberbauen.ultimateCore
- * @subpackage	system.cache.builder
+ * @subpackage	data
  * @category	Community Framework
  */
-class UserCacheBuilder extends AbstractCacheBuilder {
+interface IVersionableDatabaseObjectAction {
 	/**
-	 * @see \wcf\system\cache\builder\AbstractCacheBuilder::getData()
+	 * Creates a new version.
 	 */
-	protected function rebuild(array $parameters) {
-		$data = array(
-			'users' => array(),
-			'userIDs' => array()
-		);
-		
-		$userList = new UserList();
-		$userList->readObjects();
-		$users = $userList->getObjects();
-		$userIDs = $userList->getObjectIDs();
-		
-		if (empty($users)) return $data;
-		
-		$data['users'] = $users;
-		$data['userIDs'] = $userIDs;
-		
-		return $data;
-	}
+	public function createVersion();
+	
+	/**
+	 * Validates the create version call.
+	 */
+	public function validateCreateVersion();
+	
+	/**
+	 * Deletes a version.
+	 */
+	public function deleteVersion();
+	
+	/**
+	 * Validates the delete version call.
+	 */
+	public function validateDeleteVersion();
 }

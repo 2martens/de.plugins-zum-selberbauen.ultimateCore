@@ -19,7 +19,7 @@
  * along with the Ultimate Core.  If not, see {@link http://www.gnu.org/licenses/}.
  * 
  * @author		Jim Martens
- * @copyright	2011-2012 Jim Martens
+ * @copyright	2011-2014 Jim Martens
  * @license		http://www.gnu.org/licenses/lgpl-3.0 GNU Lesser General Public License, version 3
  * @package		de.plugins-zum-selberbauen.ultimateCore
  * @subpackage	system.event.listener
@@ -35,7 +35,7 @@ use wcf\system\event\IEventListener;
  * Resets the user, comment and comment response cache.
  * 
  * @author		Jim Martens
- * @copyright	2013 Jim Martens
+ * @copyright	2011-2014 Jim Martens
  * @license		http://www.gnu.org/licenses/lgpl-3.0 GNU Lesser General Public License, version 3
  * @package		de.plugins-zum-selberbauen.ultimateCore
  * @subpackage	system.event.listener
