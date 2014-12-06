@@ -54,27 +54,7 @@ abstract class AbstractLanguageEntryCacheBuilder extends AbstractCacheBuilder {
 	 * @see \wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
 	protected final function rebuild(array $parameters) {
-		$data = array(
-			'languageEntryIDsToObjectID' => array(),
-			'languageEntries' => array()
-		);
-		
-		// build languageEntryIDsToObjectID
-		$sql = 'SELECT languageEntryID, languageID, '.static::getObjectIDName().'
-		        FROM   '.static::getDatabaseTableName();
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute();
-		
-		while ($row = $statement->fetchArray()) {
-			if (!isset($data['languageEntryIDsToObjectID'][$row[static::getObjectIDName()]])) {
-				$data['languageEntryIDsToObjectID'][$row[static::getObjectIDName()]] = array();
-			}
-			$data['languageEntryIDsToObjectID'][$row[static::getObjectIDName()]][($row['languageID'] !== null ? $row['languageID'] : 0)] = $row['languageEntryID'];
-		}
-		
-		$data['languageEntries'] = $this->buildLanguageEntries();
-		
-		return $data;
+		return $this->getCachedData();
 	}
 	
 	/**
@@ -102,5 +82,34 @@ abstract class AbstractLanguageEntryCacheBuilder extends AbstractCacheBuilder {
 	 */
 	protected static function getDatabaseTableName() {
 		return call_user_func(array(static::$languageEntryClass, 'getDatabaseTableName'));
+	}
+
+	/**
+	 * Returns the data read from database.
+	 * 
+	 * @return array
+	 */
+	public function getCachedData() {
+		$data = array(
+			'languageEntryIDsToObjectID' => array(),
+			'languageEntries' => array()
+		);
+
+		// build languageEntryIDsToObjectID
+		$sql = 'SELECT languageEntryID, languageID, '.static::getObjectIDName().'
+		        FROM   '.static::getDatabaseTableName();
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute();
+
+		while ($row = $statement->fetchArray()) {
+			if (!isset($data['languageEntryIDsToObjectID'][$row[static::getObjectIDName()]])) {
+				$data['languageEntryIDsToObjectID'][$row[static::getObjectIDName()]] = array();
+			}
+			$data['languageEntryIDsToObjectID'][$row[static::getObjectIDName()]][($row['languageID'] !== null ? $row['languageID'] : 0)] = $row['languageEntryID'];
+		}
+
+		$data['languageEntries'] = $this->buildLanguageEntries();
+
+		return $data;
 	}
 }
