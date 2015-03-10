@@ -52,6 +52,8 @@ interface IVersionableDatabaseObjectAction {
 	
 	/**
 	 * Deletes a version.
+	 * 
+	 * @return array
 	 */
 	public function deleteVersion();
 	
