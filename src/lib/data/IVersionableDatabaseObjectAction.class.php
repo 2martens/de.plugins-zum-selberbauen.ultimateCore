@@ -40,6 +40,8 @@ namespace wcf\data;
 interface IVersionableDatabaseObjectAction {
 	/**
 	 * Creates a new version.
+	 * 
+	 * @return \wcf\data\IVersion
 	 */
 	public function createVersion();
 	
@@ -57,4 +59,14 @@ interface IVersionableDatabaseObjectAction {
 	 * Validates the delete version call.
 	 */
 	public function validateDeleteVersion();
+
+	/**
+	 * Updates a version.
+	 */
+	public function updateVersion();
+
+	/**
+	 * Validates the updateVersion call.
+	 */
+	public function validateUpdateVersion();
 }
