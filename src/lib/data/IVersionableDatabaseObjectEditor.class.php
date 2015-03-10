@@ -60,9 +60,9 @@ interface IVersionableDatabaseObjectEditor {
 	 * Deletes the given version.
 	 * 
 	 * @api
-	 * @param	integer	$versionID
+	 * @param	integer	$versionNumber
 	 */
-	public function deleteVersion($versionID);
+	public function deleteVersion($versionNumber);
 	
 	/**
 	 * Deletes all given versions of a given object.

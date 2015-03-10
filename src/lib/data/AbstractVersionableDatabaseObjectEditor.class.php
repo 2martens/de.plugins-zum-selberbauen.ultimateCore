@@ -118,8 +118,8 @@ abstract class AbstractVersionableDatabaseObjectEditor extends DatabaseObjectEdi
 	/**
 	 * @see \wcf\data\IVersionableDatabaseObjectEditor::deleteVersion()
 	 */
-	public function deleteVersion($versionID) {
-		static::deleteAllVersions($this->getObjectID(), array($versionID));
+	public function deleteVersion($versionNumber) {
+		static::deleteAllVersions($this->getObjectID(), array($versionNumber));
 	}
 	
 	/**
@@ -138,7 +138,7 @@ abstract class AbstractVersionableDatabaseObjectEditor extends DatabaseObjectEdi
 		$affectedCount = 0;
 		WCF::getDB()->beginTransaction();
 		foreach ($versionNumbers as $versionNumber) {
-			$statement->executeUnbuffered(array($objectID, $versionNumber));
+			$statement->execute(array($objectID, $versionNumber));
 			$affectedCount += $statement->getAffectedRows();
 		}
 		WCF::getDB()->commitTransaction();
