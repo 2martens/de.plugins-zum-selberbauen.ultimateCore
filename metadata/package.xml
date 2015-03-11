@@ -31,7 +31,7 @@
         <instruction type="language">language/*.xml</instruction>
     </instructions>
     
-    <instructions type="update" fromversion="1.0.0 Dev 1">
+    <instructions type="update" fromversion="1.1.0 Dev 1">
         <instruction type="file">files_update.tar</instruction>
     </instructions>
 </package>
