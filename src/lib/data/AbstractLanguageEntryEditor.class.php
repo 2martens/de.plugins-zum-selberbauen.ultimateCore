@@ -58,6 +58,7 @@ abstract class AbstractLanguageEntryEditor extends DatabaseObjectEditor implemen
 		$languageIDs = array();
 		foreach ($data as $languageID => $__data) {
 			$keys[$languageID] = $values[$languageID] = '';
+			$statementParameters[$languageID] = array();
 			foreach ($__data as $key => $value) {
 				if ($key == 'languageID' || $key == static::getObjectIDName()) {
 					continue;
@@ -73,7 +74,6 @@ abstract class AbstractLanguageEntryEditor extends DatabaseObjectEditor implemen
 			}
 			if (!empty($keys[$languageID])) {
 				$languageIDs[] = $languageID;
-				$statementParameters[$languageID] = array();
 				$keys[$languageID] .= ',languageID,'.static::getObjectIDName();
 				$values[$languageID] .= ',?,?';
 				$statementParameters[$languageID][] = ($languageID ? $languageID : null);
