@@ -18,17 +18,6 @@
 				<exclude name="acp/templates/**" />
 			</tarfileset>
 		</tar>
-		
-		<!-- 1.1.0 Dev 2 update tars -->
-		<tar destfile="metadata/files_update.tar">
-			<tarfileset dir="src">
-				<exclude name="templates/**" />
-				<exclude name="acp/templates/**" />
-				<include name="lib/data/AbstractVersionableDatabaseObjectEditor.class.php" />
-                <include name="lib/data/IVersionableDatabaseObjectAction.class.php" />
-                <include name="lib/data/IVersionableDatabaseObjectEditor.class.php" />
-			</tarfileset>
-		</tar>
 	</target>
 	
 	<target name="build" depends="pack" description="Generates the package archive.">
