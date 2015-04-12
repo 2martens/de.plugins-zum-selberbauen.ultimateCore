@@ -44,7 +44,7 @@ use wcf\system\io\File;
  * @subpackage	system.event.listener
  * @category	Ultimate Core
  */
-class ACPFirstTimeListener implements IEventListener {
+class ACPFirstTimeListener implements IParameterizedEventListener {
 	/**
 	 * The name of the config file.
 	 * @var	string
@@ -63,8 +63,9 @@ class ACPFirstTimeListener implements IEventListener {
 	 * @param	object	$eventObj
 	 * @param	string	$className
 	 * @param	string	$eventName
+	 * @param   array   $parameters
 	 */
-	public function execute($eventObj, $className, $eventName) {
+	public function execute($eventObj, $className, $eventName, array &$parameters) {
 		// if we are in WCF ACP, don't execute the event listener
 		if (PACKAGE_ID == 1) {
 			return;

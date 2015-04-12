@@ -41,11 +41,11 @@ use wcf\system\event\IEventListener;
  * @subpackage	system.event.listener
  * @category	Community Framework
  */
-class CacheResetListener implements IEventListener {
+class CacheResetListener implements IParameterizedEventListener {
 	/**
 	 * @link	http://doc.codingcorner.info/WoltLab-WCFSetup/classes/wcf.system.event.IEventListener.html#execute
 	 */
-	public function execute($eventObj, $className, $eventName) {
+	public function execute($eventObj, $className, $eventName, array &$parameters) {
 		switch ($className) {
 			case 'wcf\acp\form\UserAddForm':
 			case 'wcf\acp\form\UserEditForm':

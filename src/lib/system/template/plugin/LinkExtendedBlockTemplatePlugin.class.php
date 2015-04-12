@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\template\plugin;
-use wcf\system\request\UltimateLinkHandler;
+use wcf\system\request\LinkHandler;
 use wcf\system\template\TemplateEngine;
 use wcf\util\StringUtil;
 
@@ -31,9 +31,9 @@ class LinkExtendedBlockTemplatePlugin extends LinkBlockTemplatePlugin {
 		
 		if (isset($tagArgs['encode']) && !$tagArgs['encode']) {
 			unset($tagArgs['encode']);
-			return UltimateLinkHandler::getInstance()->getLink($tagArgs['controller'], $tagArgs, $blockContent);
+			return LinkHandler::getInstance()->getLink($tagArgs['controller'], $tagArgs, $blockContent);
 		}
 		
-		return StringUtil::encodeHTML(UltimateLinkHandler::getInstance()->getLink($tagArgs['controller'], $tagArgs, $blockContent));
+		return StringUtil::encodeHTML(LinkHandler::getInstance()->getLink($tagArgs['controller'], $tagArgs, $blockContent));
 	}
 }

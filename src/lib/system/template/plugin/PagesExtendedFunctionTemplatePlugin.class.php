@@ -27,7 +27,7 @@
  */
 namespace wcf\system\template\plugin;
 use wcf\system\exception\SystemException;
-use wcf\system\request\UltimateLinkHandler;
+use wcf\system\request\LinkHandler;
 use wcf\system\template\TemplateEngine;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -78,7 +78,7 @@ class PagesExtendedFunctionTemplatePlugin extends PagesFunctionTemplatePlugin {
 			if (isset($parameters['link'])) unset($parameters['link']);
 			if (isset($parameters['print'])) unset($parameters['print']);
 			if (isset($parameters['assign'])) unset($parameters['assign']);
-			$link = StringUtil::encodeHTML(UltimateLinkHandler::getInstance()->getLink($tagArgs['controller'], $parameters, $tagArgs['link']));
+			$link = StringUtil::encodeHTML(LinkHandler::getInstance()->getLink($tagArgs['controller'], $parameters, $tagArgs['link']));
 			
 			if (!isset($tagArgs['page'])) {
 				if (($tagArgs['page'] = $tplObj->get('pageNo')) === null) {

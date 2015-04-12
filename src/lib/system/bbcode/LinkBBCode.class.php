@@ -26,7 +26,7 @@
  * @category	Community Framework
  */
 namespace wcf\system\bbcode;
-use wcf\system\request\UltimateLinkHandler;
+use wcf\system\request\LinkHandler;
 use wcf\util\StringUtil;
 
 /**
@@ -68,7 +68,7 @@ class LinkBBCode extends AbstractBBCode {
 			$url = StringUtil::decodeHTML($url);
 		}
 		
-		$link = UltimateLinkHandler::getInstance()->getLink($attributes['controller'], $attributes, $url);
+		$link = LinkHandler::getInstance()->getLink($attributes['controller'], $attributes, $url);
 		return StringUtil::getAnchorTag($link, $content, false);
 	}
 	
